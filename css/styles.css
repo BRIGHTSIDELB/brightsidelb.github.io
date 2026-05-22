@@ -390,6 +390,14 @@ section {
     font-size: 1.125rem;
 }
 
+.feature-copy .section-description {
+    font-family: 'Benton Modern D', Georgia, serif;
+    font-size: 2rem;
+    line-height: 1.25;
+    font-weight: 600;
+    color: #2b2d57;
+}
+
 .feature {
     position: relative;
     background:
@@ -462,6 +470,11 @@ section {
 .contact .eyebrow {
     font-size: 2.5rem;
     color: var(--blue);
+}
+
+.feature-copy .section-heading .eyebrow + p,
+.intro-copy .section-heading .eyebrow + p {
+    margin-top: 25px;
 }
 
 .feature-art {
