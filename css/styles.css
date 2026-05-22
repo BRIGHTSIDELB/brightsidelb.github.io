@@ -372,10 +372,12 @@ section {
 .process-card h3 {
     margin: 0;
     font-family: 'Halyard Display', Arial, Helvetica, sans-serif;
-    font-size: 1.05rem;
-    line-height: 1.28;
-    color: #26304d;
+    font-size: 24px;
+    line-height: 32px;
+    color: var(--Colors-Dusk, #28285A);
     font-weight: 500;
+    font-style: normal;
+    letter-spacing: 0.07px;
 }
 
 .service-card p,
@@ -388,6 +390,7 @@ section {
     color: #3d465d;
     line-height: 1.67;
     font-size: 1.125rem;
+    letter-spacing: -0.439px;
 }
 
 .feature-copy .section-description {
@@ -447,11 +450,13 @@ section {
 .intro-copy h3,
 .contact h3 {
     margin: 0;
-    font-size: 2rem;
-    line-height: 1.25;
-    color: #2b2d57;
-    font-weight: 600;
+    font-size: 24px;
+    line-height: 32px;
+    color: var(--Colors-Dusk, #28285A);
+    font-weight: 500;
     font-family: 'Halyard Display', Arial, Helvetica, sans-serif;
+    font-style: normal;
+    letter-spacing: 0.07px;
 }
 
 .feature-copy .section-heading,
@@ -474,6 +479,10 @@ section {
 
 .feature-copy .section-heading .eyebrow + p,
 .intro-copy .section-heading .eyebrow + p {
+    margin-top: 25px;
+}
+
+.contact .section-heading .eyebrow + p {
     margin-top: 25px;
 }
 
