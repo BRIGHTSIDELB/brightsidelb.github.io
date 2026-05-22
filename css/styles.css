@@ -477,13 +477,8 @@ section {
     color: var(--blue);
 }
 
-.feature-copy .section-heading .eyebrow + p,
-.intro-copy .section-heading .eyebrow + p {
-    margin-top: 25px;
-}
-
-.contact .section-heading .eyebrow + p {
-    margin-top: 25px;
+.section-heading .eyebrow + p {
+    margin-top: 10px;
 }
 
 .feature-art {
