@@ -310,10 +310,10 @@ section {
 
 .section-description {
     margin: 10px 0 0;
-    font-size: 2rem;
-    line-height: 1.25;
+    font-size: 1.5rem;
+    line-height: 1.33;
     font-weight: 600;
-    color: #2b2d57;
+    color: #323962;
     font-family: 'Benton Modern D', Georgia, serif;
 }
 
@@ -372,7 +372,7 @@ section {
 .process-card h3 {
     margin: 0;
     font-family: 'Halyard Display', Arial, Helvetica, sans-serif;
-    font-size: 24px;
+    font-size: 1.125rem;
     line-height: 32px;
     color: var(--Colors-Dusk, #28285A);
     font-weight: 500;
@@ -395,10 +395,10 @@ section {
 
 .feature-copy .section-description {
     font-family: 'Benton Modern D', Georgia, serif;
-    font-size: 2rem;
-    line-height: 1.25;
+    font-size: 1.5rem;
+    line-height: 1.33;
     font-weight: 600;
-    color: #2b2d57;
+    color: #323962;
 }
 
 .feature {
@@ -488,7 +488,7 @@ section {
 }
 
 .feature-art img {
-    width: min(100%, 420px);
+    width: min(100%, 294px);
     aspect-ratio: 1;
     object-fit: cover;
     border-radius: 0;
@@ -559,7 +559,7 @@ section {
 }
 
 .intro-copy {
-    max-width: 640px;
+    max-width: 600px;
 }
 
 .intro-copy p + p {
@@ -567,7 +567,7 @@ section {
 }
 
 .feature-copy {
-    max-width: 640px;
+    max-width: 600px;
 }
 
 .feature-copy p + p {
@@ -609,7 +609,7 @@ section {
 }
 
 .contact .section-description {
-    font-weight: 400;
+    font-weight: 600;
 }
 
 .contact__inner {
@@ -767,6 +767,7 @@ section {
     }
 
     .hero p,
+    .section-description,
     .section-lead,
     .service-card p,
     .process-card p,
