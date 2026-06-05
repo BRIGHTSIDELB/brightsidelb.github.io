@@ -506,7 +506,6 @@ section {
     border-top: 5px solid var(--coral);
     border-radius: 0 0 14px 14px;
     padding: 28px;
-    min-height: 255px;
     box-shadow: var(--shadow-soft);
 }
 
