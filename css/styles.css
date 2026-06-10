@@ -342,7 +342,7 @@ section {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 40px;
-    align-items: start;
+    align-items: stretch;
 }
 
 .service-card {
@@ -350,6 +350,7 @@ section {
     grid-template-columns: 100px minmax(0, 1fr);
     gap: 12px;
     align-items: center;
+    align-self: stretch;
     padding: 16px;
     background: #fff;
     border-radius: 8px;
