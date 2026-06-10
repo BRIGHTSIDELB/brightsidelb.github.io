@@ -340,32 +340,32 @@ section {
 
 .services-grid {
     display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: 28px 24px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 40px;
     align-items: start;
 }
 
 .service-card {
-    text-align: center;
     display: grid;
-    justify-items: center;
-    gap: 14px;
-    grid-column: span 4;
+    grid-template-columns: 100px minmax(0, 1fr);
+    gap: 12px;
+    align-items: center;
+    padding: 16px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 4px -1px rgba(12, 12, 13, 0.1), 0 4px 4px -1px rgba(12, 12, 13, 0.05);
 }
 
-.service-card:nth-child(4) {
-    grid-column: 3 / span 4;
-}
-
-.service-card:nth-child(5) {
-    grid-column: 7 / span 4;
+.service-card__content {
+    display: grid;
+    gap: 8px;
 }
 
 .service-card__icon {
-    width: 86px;
+    width: 100px;
     aspect-ratio: 1;
     object-fit: contain;
-    filter: drop-shadow(0 10px 16px rgba(18, 31, 71, 0.12));
+    filter: none;
 }
 
 .service-card h3,
@@ -391,6 +391,10 @@ section {
     line-height: 1.67;
     font-size: 1.125rem;
     letter-spacing: -0.439px;
+}
+
+.service-card p {
+    color: #202020;
 }
 
 .feature-copy .section-description {
@@ -654,22 +658,6 @@ section {
 }
 
 @media (max-width: 1080px) {
-    .services-grid {
-        grid-template-columns: 1fr;
-        justify-items: stretch;
-    }
-
-    .service-card {
-        grid-column: auto;
-        width: 100%;
-        max-width: none;
-    }
-
-    .service-card:nth-child(4),
-    .service-card:nth-child(5) {
-        grid-column: auto;
-    }
-
     .feature__inner,
     .team__inner {
         grid-template-columns: 1fr;
@@ -753,16 +741,17 @@ section {
 
     .services-grid {
         grid-template-columns: 1fr;
+        gap: 20px;
     }
 
     .service-card {
-        grid-column: auto;
-        width: 100%;
+        grid-template-columns: 72px minmax(0, 1fr);
+        align-items: start;
+        padding: 14px;
     }
 
-    .service-card:nth-child(4),
-    .service-card:nth-child(5) {
-        grid-column: auto;
+    .service-card__icon {
+        width: 72px;
     }
 
     .hero h2 {
