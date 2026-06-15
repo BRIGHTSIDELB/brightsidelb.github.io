@@ -47,6 +47,47 @@ a {
     text-decoration: none;
 }
 
+.skip-link {
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 1000;
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: #008CD2;
+    color: #ffffff;
+    font-family: 'Halyard Text', Arial, Helvetica, sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transform: translateY(-160%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.skip-link:focus,
+.skip-link:focus-visible {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+#main-content:focus,
+#main-content:focus-visible,
+h1:focus,
+h1:focus-visible,
+h2:focus,
+h2:focus-visible,
+h3:focus,
+h3:focus-visible,
+h4:focus,
+h4:focus-visible,
+h5:focus,
+h5:focus-visible,
+h6:focus,
+h6:focus-visible {
+    outline: none;
+}
+
 .site-shell {
     width: min(var(--max), calc(100% - 32px));
     margin: 0 auto;
@@ -121,21 +162,14 @@ a {
 .site-nav a.btn {
     color: #fff;
     opacity: 1;
-    box-shadow: none;
-}
-
-.site-nav a.btn:hover,
-.site-nav a.btn:focus-visible {
-    color: #fff;
-    box-shadow: none;
 }
 
 .site-nav__contact-icon {
     display: none;
 }
 
-.site-nav a:hover,
-.site-nav a:focus-visible {
+.site-nav a:not(.btn):hover,
+.site-nav a:not(.btn):focus-visible {
     color: var(--blue);
 }
 
@@ -151,23 +185,17 @@ a {
     font-family: 'Halyard Text', Arial, Helvetica, sans-serif;
     font-size: 0.9rem;
     font-weight: 500;
-    background: linear-gradient(180deg, #1a94ee, #0077cf);
+    background: #008CD2;
     color: #fff;
-    box-shadow: 0 10px 22px rgba(18, 136, 223, 0.28);
-    transition: transform 160ms ease, box-shadow 160ms ease, filter 160ms ease;
-}
-
-.btn:hover,
-.btn:focus-visible {
-    transform: translateY(-1px);
-    box-shadow: 0 16px 30px rgba(18, 136, 223, 0.32);
+    box-shadow: none;
+    transition: none;
 }
 
 .btn--light {
     background: #fff;
     color: var(--blue);
     border: 1px solid rgba(18, 136, 223, 0.22);
-    box-shadow: 0 10px 24px rgba(22, 49, 94, 0.08);
+    box-shadow: none;
 }
 
 main {
@@ -273,14 +301,7 @@ section {
     border: 0;
     box-shadow: none;
     color: var(--blue);
-    transition: transform 160ms ease;
-}
-
-.hero .btn:hover,
-.hero .btn:focus-visible {
-    transform: translateY(-1px);
-    box-shadow: none;
-    filter: none;
+    transition: none;
 }
 
 .hero .btn svg {
@@ -641,11 +662,6 @@ section {
     font-weight: 400;
 }
 
-.contact .btn:hover,
-.contact .btn:focus-visible {
-    box-shadow: none;
-}
-
 .footer {
     padding: 16px 0 28px;
     text-align: center;
@@ -716,13 +732,8 @@ section {
         padding: clamp(2px, 1vw, 4px);
         border-radius: 999px;
         box-shadow: none;
-        background: var(--blue);
-    }
-
-    .site-nav .btn:hover,
-    .site-nav .btn:focus-visible {
-        transform: none;
-        box-shadow: none;
+        background: #008CD2;
+        transition: none;
     }
 
     .site-nav__contact-label {

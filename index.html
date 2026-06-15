@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <div id="top" aria-hidden="true"></div>
     <header class="site-header">
         <div class="site-header__inner">
             <h1>
@@ -32,7 +34,7 @@
         </div>
     </header>
 
-    <main id="top">
+    <main id="main-content" tabindex="-1">
         <section class="hero" aria-labelledby="hero-title">
             <div class="site-shell">
                 <div class="hero__inner stack">
@@ -161,5 +163,34 @@
     <footer class="footer">
         <div class="site-shell">Copyright Brightside Design 2026</div>
     </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var headings = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
+            headings.forEach(function (heading) {
+                if (!heading.hasAttribute('tabindex')) {
+                    heading.setAttribute('tabindex', '0');
+                }
+            });
+
+            var skipLink = document.querySelector('.skip-link');
+            var mainContent = document.getElementById('main-content');
+            if (!skipLink || !mainContent) {
+                return;
+            }
+
+            function activateSkip(event) {
+                event.preventDefault();
+                mainContent.focus({ preventScroll: true });
+                mainContent.scrollIntoView({ block: 'start' });
+            }
+
+            skipLink.addEventListener('click', activateSkip);
+            skipLink.addEventListener('keydown', function (event) {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    activateSkip(event);
+                }
+            });
+        });
+    </script>
 </body>
 </html>
