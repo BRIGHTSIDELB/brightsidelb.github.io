@@ -609,6 +609,7 @@ section {
 }
 
 .contact .section-description {
+    margin-top: 18px;
     font-weight: 400;
 }
 
@@ -835,6 +836,11 @@ section {
         flex-direction: column;
         gap: 24px;
         align-items: center;
+        padding-inline: 18px;
+    }
+
+    .contact .section-description {
+        padding-inline: 0;
     }
 
     .section-heading {
