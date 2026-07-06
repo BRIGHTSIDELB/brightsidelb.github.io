@@ -615,9 +615,16 @@ section {
 .contact__inner {
     display: grid;
     place-items: center;
-    gap: 24px;
+    gap: 64px;
     width: min(640px, 100%);
     margin: 0 auto;
+}
+
+.contact__text {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    align-items: center;
 }
 
 .contact-illustration {
@@ -813,13 +820,21 @@ section {
     .contact__inner {
         display: flex;
         flex-direction: column;
-        gap: 24px;
+        gap: 40px;
+        width: 100%;
     }
 
     .contact-illustration {
-        order: 2;
+        order: -1;
         width: 100%;
         max-width: 252px;
+    }
+
+    .contact__text {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        align-items: center;
     }
 
     .section-heading {
