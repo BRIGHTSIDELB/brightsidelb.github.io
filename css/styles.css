@@ -864,6 +864,10 @@ section {
         padding-block: 28px;
     }
 
+    .team__inner {
+        justify-items: center;
+    }
+
     .process-grid {
         grid-template-columns: 1fr;
     }
