@@ -420,10 +420,10 @@ section {
 .feature-copy p,
 .intro-copy p {
     margin: 0;
-    font-family: 'Aktiv_Grotesk', Arial, Helvetica, sans-serif;
+    font-family: 'Halyard Text', 'Aktiv_Grotesk', Arial, Helvetica, sans-serif;
     color: #272a2e;
-    line-height: 24px;
-    font-size: 16px;
+    line-height: 30px;
+    font-size: 18px;
     letter-spacing: 0;
     font-weight: 400;
 }
