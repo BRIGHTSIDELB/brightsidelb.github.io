@@ -243,7 +243,7 @@ section {
     padding: clamp(56px, 10vw, 108px) clamp(24px, 6vw, 96px);
     min-height: 420px;
     text-align: left;
-    background: transparent;
+    background: #FFFFFF;
     box-shadow: none;
     overflow: hidden;
 }
@@ -356,7 +356,14 @@ section {
 .services,
 .process {
     padding: clamp(68px, 8vw, 96px) 0;
-    background: #fff9fa;
+}
+
+.services {
+    background: #FFFFFF;
+}
+
+.process {
+    background: #FFF9FA;
 }
 
 .team,
@@ -441,7 +448,7 @@ section {
 
 .feature {
     position: relative;
-    background: transparent;
+    background: #FFFFFF;
     box-shadow: none;
     overflow: hidden;
 }
@@ -525,7 +532,7 @@ section {
 
 .team {
     position: relative;
-    background: #fff;
+    background: #FFFFFF;
 }
 
 .team__inner {
@@ -588,7 +595,7 @@ section {
 
 .contact {
     text-align: center;
-    background: #f5f9ff;
+    background: #F5F9FF;
 }
 
 .contact .section-description {
@@ -620,11 +627,14 @@ section {
 }
 
 .footer {
-    padding: 16px 0 28px;
+    padding: 48px clamp(24px, 6vw, 96px);
     text-align: center;
     font-family: 'Aktiv_Grotesk', Arial, Helvetica, sans-serif;
-    color: rgba(35, 36, 65, 0.7);
-    font-size: 0.88rem;
+    color: #272a2e;
+    font-size: 16px;
+    line-height: 24px;
+    background: #FFFFFF;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .intro-copy strong {
