@@ -503,6 +503,17 @@ section {
     margin-top: 10px;
 }
 
+.services .section-heading .eyebrow + p,
+.process .section-heading .eyebrow + p {
+    margin-top: 10px;
+}
+
+.feature .section-heading .eyebrow + p,
+.team .section-heading .eyebrow + p,
+.contact .section-heading .eyebrow + p {
+    margin-top: 18px;
+}
+
 .feature-art {
     display: flex;
     justify-content: flex-start;
@@ -618,7 +629,6 @@ section {
 }
 
 .contact .section-description {
-    margin-top: 18px;
     margin-bottom: 0;
     font-weight: 400;
     font-family: inherit;
