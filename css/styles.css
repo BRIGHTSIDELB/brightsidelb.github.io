@@ -429,7 +429,7 @@ section {
 }
 
 .contact p {
-    margin: 0;
+    max-width: 38rem;
     font-family: 'Aktiv_Grotesk', Arial, Helvetica, sans-serif;
     color: #272a2e;
     line-height: 28px;
@@ -610,7 +610,11 @@ section {
 
 .contact .section-description {
     margin-top: 18px;
+    margin-bottom: 0;
     font-weight: 400;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
 }
 
 .contact__inner {
@@ -635,10 +639,6 @@ section {
     aspect-ratio: 251.661 / 161.96;
     object-fit: contain;
     filter: drop-shadow(0 18px 30px rgba(67, 97, 145, 0.12));
-}
-
-.contact p {
-    max-width: 38rem;
 }
 
 .contact .btn {
