@@ -12,6 +12,9 @@
 *.sublime-project
 *.sublime-workspace
 
+# Local documentation (regularly updated, not tracked)
+assets/LESSONS-LEARNED.md
+
 # Old files
 old-index.html
 backlog.md
