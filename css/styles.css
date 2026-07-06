@@ -611,8 +611,9 @@ section {
 }
 
 .contact-illustration {
-    width: clamp(200px, 40vw, 400px);
+    width: 252px;
     height: auto;
+    aspect-ratio: 251.661 / 161.96;
     object-fit: contain;
     filter: drop-shadow(0 18px 30px rgba(67, 97, 145, 0.12));
 }
