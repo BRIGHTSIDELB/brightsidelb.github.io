@@ -181,7 +181,7 @@ h6:focus-visible {
     min-height: 40px;
     padding: 0.6rem 1.2rem;
     border: 1px solid transparent;
-    border-radius: 50px;
+    border-radius: 8px;
     font-family: 'Halyard Text', Arial, Helvetica, sans-serif;
     font-size: 0.9rem;
     font-weight: 500;
@@ -195,7 +195,7 @@ h6:focus-visible {
 .btn:hover,
 .btn:focus-visible,
 .btn:active {
-    background: #D9F2FA;
+    background: #C3EAF8;
     border-color: #26C2EC;
     color: #1d2d3f;
 }
@@ -669,7 +669,7 @@ section {
         width: auto;
         min-height: auto;
         padding: clamp(2px, 1vw, 4px);
-        border-radius: 999px;
+        border-radius: 8px;
         box-shadow: none;
         background: #26C2EC;
     }
