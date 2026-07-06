@@ -103,8 +103,8 @@ h6:focus-visible {
     top: 0;
     z-index: 50;
     backdrop-filter: blur(12px);
-    background: rgba(255, 255, 255, 0.82);
-    border-bottom: 1px solid rgba(35, 36, 65, 0.08);
+    background: rgba(255, 255, 255, 0.95);
+    border-bottom: none;
 }
 
 .site-header__inner {
@@ -158,10 +158,10 @@ h6:focus-visible {
 
 .site-nav a {
     font-family: 'Aktiv_Grotesk', Arial, Helvetica, sans-serif;
-    font-size: 0.88rem;
-    font-weight: 500;
-    color: #2f3a52;
-    opacity: 0.9;
+    font-size: 20px;
+    font-weight: 600;
+    color: #171717;
+    opacity: 1;
 }
 
 .site-nav a.btn {
@@ -354,7 +354,11 @@ section {
 }
 
 .services,
-.process,
+.process {
+    padding: clamp(68px, 8vw, 96px) 0;
+    background: #fff9fa;
+}
+
 .team,
 .contact {
     padding: clamp(68px, 8vw, 96px) 0;
@@ -509,9 +513,9 @@ section {
 
 .process-card {
     background: #fff;
-    border-top: 5px solid var(--coral);
-    border-radius: 0 0 14px 14px;
-    padding: 28px;
+    border-top: 5px solid #de1850;
+    border-radius: 0 0 8px 8px;
+    padding: 32px;
     box-shadow: 0 4px 4px rgba(12, 12, 13, 0.05), 0 16px 16px rgba(12, 12, 13, 0.1);
 }
 
