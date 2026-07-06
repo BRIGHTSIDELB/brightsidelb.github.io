@@ -382,7 +382,7 @@ section {
     padding: 16px;
     background: #fff;
     border-radius: 8px;
-    box-shadow: 0 4px 4px -1px rgba(12, 12, 13, 0.1), 0 4px 4px -1px rgba(12, 12, 13, 0.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
 .service-card__content {
@@ -512,7 +512,7 @@ section {
     border-top: 5px solid var(--coral);
     border-radius: 0 0 14px 14px;
     padding: 28px;
-    box-shadow: var(--shadow-soft);
+    box-shadow: 0 4px 4px rgba(12, 12, 13, 0.05), 0 16px 16px rgba(12, 12, 13, 0.1);
 }
 
 .process-card p {
