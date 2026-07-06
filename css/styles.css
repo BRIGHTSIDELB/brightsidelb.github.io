@@ -518,7 +518,7 @@ section {
 
 .process-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(368px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 48px;
     width: 100%;
 }
@@ -793,6 +793,10 @@ section {
 
     .feature__inner {
         padding-block: 28px;
+    }
+
+    .process-grid {
+        grid-template-columns: 1fr;
     }
 
     .process-card {
