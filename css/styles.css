@@ -179,16 +179,25 @@ h6:focus-visible {
     justify-content: center;
     gap: 0.5rem;
     min-height: 40px;
-    padding: 0.6rem 1rem;
-    border: 0;
+    padding: 0.6rem 1.2rem;
+    border: 1px solid transparent;
     border-radius: 10px;
     font-family: 'Halyard Text', Arial, Helvetica, sans-serif;
     font-size: 0.9rem;
     font-weight: 500;
-    background: #008CD2;
-    color: #fff;
+    background: #26C2EC;
+    color: #1d2d3f;
     box-shadow: none;
-    transition: none;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.btn:hover,
+.btn:focus-visible,
+.btn:active {
+    background: #D9F2FA;
+    border-color: #26C2EC;
+    color: #1d2d3f;
 }
 
 .btn--light {
@@ -196,6 +205,14 @@ h6:focus-visible {
     color: var(--blue);
     border: 1px solid rgba(18, 136, 223, 0.22);
     box-shadow: none;
+}
+
+.btn--light:hover,
+.btn--light:focus-visible,
+.btn--light:active {
+    background: #D9F2FA;
+    border-color: #26C2EC;
+    color: #1d2d3f;
 }
 
 main {
@@ -220,13 +237,10 @@ section {
     margin-top: 0;
     padding: clamp(56px, 10vw, 108px) clamp(24px, 6vw, 96px);
     min-height: 420px;
-    text-align: center;
-    background:
-        radial-gradient(circle, rgba(255, 255, 255, 0.62) 0.55px, transparent 1.05px) 0 0 / 6px 6px,
-        radial-gradient(circle, rgba(168, 160, 168, 0.08) 0.55px, transparent 1.05px) 3px 3px / 6px 6px,
-        linear-gradient(180deg, #f6f7fa 0%, #f2f3f7 100%);
-    background-blend-mode: soft-light, overlay, normal;
+    text-align: left;
+    background: #f8f9fb;
     box-shadow: none;
+    overflow: hidden;
 }
 
 .hero .site-shell {
@@ -236,43 +250,40 @@ section {
 
 .hero::before,
 .hero::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-}
-
-.hero::before {
-    inset: -12%;
-    background:
-        radial-gradient(circle at 48% 38%, rgba(232, 169, 231, 0.58) 0%, rgba(232, 169, 231, 0.28) 24%, rgba(232, 169, 231, 0) 58%),
-        radial-gradient(circle at 58% 48%, rgba(208, 185, 245, 0.42) 0%, rgba(208, 185, 245, 0.20) 28%, rgba(208, 185, 245, 0) 62%),
-        radial-gradient(circle at 73% 76%, rgba(168, 200, 246, 0.52) 0%, rgba(168, 200, 246, 0.24) 34%, rgba(168, 200, 246, 0) 66%);
-    filter: blur(24px);
-    opacity: 0.9;
-}
-
-.hero::after {
-    inset: -4%;
-    background:
-        radial-gradient(circle at 18% 18%, rgba(255, 255, 255, 0.72) 0%, rgba(255, 255, 255, 0) 42%),
-        radial-gradient(circle at 86% 12%, rgba(255, 255, 255, 0.54) 0%, rgba(255, 255, 255, 0) 40%);
-    opacity: 0.8;
+    display: none;
 }
 
 .hero__inner {
     position: relative;
     width: 100%;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: clamp(40px, 5vw, 80px);
+}
+
+.hero__copy {
+    max-width: 520px;
+}
+
+.hero__art {
+    flex-shrink: 0;
+}
+
+.hero__art img {
+    width: min(100%, 480px);
+    height: auto;
+    display: block;
 }
 
 .hero h2 {
     margin: 0;
-    font-size: 5.2rem;
-    line-height: 0.95;
-    font-weight: 900;
-    color: #262958;
-    font-family: 'BentonModDisp', Georgia, serif;
-    font-style: italic;
+    font-size: clamp(2.4rem, 4.5vw, 4.2rem);
+    line-height: 1.1;
+    font-weight: 700;
+    color: #1d2d3f;
+    font-family: 'Halyard Display', Arial, Helvetica, sans-serif;
+    font-style: normal;
 }
 
 .hero h2 .accent {
@@ -280,34 +291,23 @@ section {
 }
 
 .hero p {
-    margin: 24px auto 0;
+    margin: 24px 0 0;
     max-width: 38rem;
-    font-family: 'Benton Modern D', Georgia, serif;
-    font-size: 1.5rem;
-    line-height: 1.33;
-    color: #323962;
-    font-weight: 600;
+    font-family: 'Halyard Text', Arial, Helvetica, sans-serif;
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: #3d465d;
+    font-weight: 400;
 }
 
 .hero .btn {
     margin-top: 28px;
-    justify-self: center;
+    align-self: start;
+    justify-self: start;
     min-height: auto;
-    padding: 8px 12px 8px 16px;
-    gap: 10px;
+    padding: 10px 22px;
     font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.5;
-    border: 0;
-    box-shadow: none;
-    color: var(--blue);
-    transition: none;
-}
-
-.hero .btn svg {
-    width: 20px;
-    height: 20px;
-    flex: 0 0 20px;
+    font-weight: 500;
 }
 
 .stack {
@@ -429,37 +429,9 @@ section {
 
 .feature {
     position: relative;
-    background:
-        radial-gradient(circle, rgba(255, 255, 255, 0.58) 0.55px, transparent 1.05px) 0 0 / 6px 6px,
-        radial-gradient(circle, rgba(168, 160, 168, 0.07) 0.55px, transparent 1.05px) 3px 3px / 6px 6px,
-        linear-gradient(180deg, #f7f6f5 0%, #f3f0ee 100%);
-    background-blend-mode: soft-light, overlay, normal;
+    background: #f7f6f5;
     box-shadow: none;
     overflow: hidden;
-}
-
-.feature::before {
-    content: "";
-    position: absolute;
-    inset: -14%;
-    background:
-        radial-gradient(circle at 22% 70%, rgba(241, 167, 193, 0.46) 0%, rgba(241, 167, 193, 0.24) 22%, rgba(241, 167, 193, 0) 58%),
-        radial-gradient(circle at 55% 44%, rgba(235, 189, 228, 0.42) 0%, rgba(235, 189, 228, 0.18) 24%, rgba(235, 189, 228, 0) 58%),
-        radial-gradient(circle at 82% 62%, rgba(247, 205, 176, 0.46) 0%, rgba(247, 205, 176, 0.22) 26%, rgba(247, 205, 176, 0) 60%);
-    filter: blur(26px);
-    opacity: 0.95;
-    pointer-events: none;
-}
-
-.feature::after {
-    content: "";
-    position: absolute;
-    inset: -4%;
-    background:
-        radial-gradient(circle at 18% 18%, rgba(255, 255, 255, 0.72) 0%, rgba(255, 255, 255, 0) 40%),
-        radial-gradient(circle at 84% 16%, rgba(255, 255, 255, 0.52) 0%, rgba(255, 255, 255, 0) 34%);
-    opacity: 0.78;
-    pointer-events: none;
 }
 
 .feature__inner {
@@ -541,37 +513,7 @@ section {
 
 .team {
     position: relative;
-    background:
-        radial-gradient(circle, rgba(255, 255, 255, 0.62) 0.55px, transparent 1.05px) 0 0 / 6px 6px,
-        radial-gradient(circle, rgba(168, 160, 168, 0.08) 0.55px, transparent 1.05px) 3px 3px / 6px 6px,
-        linear-gradient(180deg, rgba(255, 255, 255, 0.99) 0%, rgba(250, 250, 250, 0.99) 10%, rgba(250, 250, 250, 0.98) 50%, rgba(236, 236, 246, 0.92) 76%, rgba(201, 219, 246, 0.98) 100%),
-        linear-gradient(90deg, rgba(242, 235, 239, 0.96) 0%, rgba(246, 224, 233, 0.92) 22%, rgba(242, 232, 244, 0.88) 50%, rgba(224, 234, 248, 0.92) 78%, rgba(215, 239, 247, 0.98) 100%);
-    background-blend-mode: soft-light, overlay, normal, normal;
-}
-
-.team::before {
-    content: "";
-    position: absolute;
-    inset: -10%;
-    background:
-        radial-gradient(circle at 12% 14%, rgba(242, 235, 239, 0.72) 0%, rgba(242, 235, 239, 0.34) 24%, rgba(242, 235, 239, 0) 58%),
-        radial-gradient(circle at 16% 84%, rgba(246, 214, 223, 0.56) 0%, rgba(246, 214, 223, 0.22) 24%, rgba(246, 214, 223, 0) 60%),
-        radial-gradient(circle at 84% 18%, rgba(226, 243, 249, 0.52) 0%, rgba(226, 243, 249, 0.24) 24%, rgba(226, 243, 249, 0) 58%),
-        radial-gradient(circle at 80% 82%, rgba(165, 198, 242, 0.50) 0%, rgba(165, 198, 242, 0.22) 26%, rgba(165, 198, 242, 0) 60%);
-    filter: blur(22px);
-    pointer-events: none;
-    opacity: 0.98;
-}
-
-.team::after {
-    content: "";
-    position: absolute;
-    inset: auto -4% 0;
-    height: 42%;
-    background: linear-gradient(90deg, rgba(242, 216, 225, 0.34) 0%, rgba(237, 226, 244, 0.20) 34%, rgba(216, 232, 248, 0.28) 68%, rgba(196, 232, 244, 0.34) 100%);
-    filter: blur(10px);
-    opacity: 0.92;
-    pointer-events: none;
+    background: #fff;
 }
 
 .team__inner {
@@ -608,20 +550,18 @@ section {
 }
 
 .avatar {
-    width: clamp(150px, 18vw, 210px);
+    width: clamp(180px, 22vw, 240px);
     aspect-ratio: 1;
     border-radius: 50%;
     overflow: hidden;
-    box-shadow: 0 20px 38px rgba(33, 58, 105, 0.16);
     background: transparent;
 }
 
 .avatar img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    transform: scale(1.04);
-    transform-origin: center;
+    object-fit: contain;
+    transform: none;
 }
 
 .contact {
@@ -732,8 +672,7 @@ section {
         padding: clamp(2px, 1vw, 4px);
         border-radius: 999px;
         box-shadow: none;
-        background: #008CD2;
-        transition: none;
+        background: #26C2EC;
     }
 
     .site-nav__contact-label {
@@ -749,6 +688,15 @@ section {
     .hero {
         padding-inline: 18px;
         min-height: 360px;
+        text-align: left;
+    }
+
+    .hero__inner {
+        grid-template-columns: 1fr;
+    }
+
+    .hero__art {
+        display: none;
     }
 
     .services-grid {
