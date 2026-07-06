@@ -631,9 +631,9 @@ section {
 .contact .section-description {
     margin-bottom: 0;
     font-weight: 400;
-    font-family: inherit;
-    font-size: inherit;
-    line-height: inherit;
+    font-family: 'Aktiv_Grotesk', Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    line-height: 28px;
 }
 
 .contact__inner {
