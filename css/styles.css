@@ -703,6 +703,12 @@ section {
         order: -1;
     }
 
+    .feature-art img {
+        max-width: 50vw;
+        display: block;
+        margin: 0 auto;
+    }
+
     .team__inner {
         justify-items: start;
     }
@@ -800,7 +806,9 @@ section {
 
     .hero__art img {
         width: 100%;
-        max-width: 100%;
+        max-width: 50vw;
+        display: block;
+        margin: 0 auto;
     }
 
     .services-grid {
@@ -874,7 +882,9 @@ section {
     .contact-illustration {
         order: -1;
         width: 100%;
-        max-width: 252px;
+        max-width: 50vw;
+        display: block;
+        margin: 0 auto;
     }
 
     .contact__text {
