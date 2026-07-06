@@ -517,10 +517,10 @@ section {
 }
 
 .process-grid {
-    display: flex;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(368px, 1fr));
     gap: 48px;
-    flex-wrap: wrap;
+    width: 100%;
 }
 
 .process-card {
@@ -528,7 +528,6 @@ section {
     border-top: 5px solid #de1850;
     border-radius: 0 0 8px 8px;
     padding: 32px;
-    width: 368px;
     height: 262px;
     display: flex;
     flex-direction: column;
