@@ -774,7 +774,7 @@ section {
     .hero {
         padding-inline: 18px;
         min-height: 360px;
-        text-align: left;
+        text-align: center;
     }
 
     .hero__inner {
@@ -811,7 +811,6 @@ section {
 
     .hero__art img {
         width: 100%;
-        max-width: 50vw;
         display: block;
         margin: 0 auto;
     }
