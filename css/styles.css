@@ -802,7 +802,7 @@ section {
     }
 
     .hero__art {
-        order: 0;
+        order: -1;
         width: 100%;
         grid-column: 1;
         grid-row: auto;
