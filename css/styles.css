@@ -662,6 +662,7 @@ section {
 
     .feature-art {
         justify-content: center;
+        order: -1;
     }
 
     .team__inner {
@@ -670,6 +671,7 @@ section {
 
     .team-avatars {
         justify-content: flex-start;
+        order: -1;
     }
 
     .process-grid {
@@ -733,10 +735,17 @@ section {
 
     .hero__inner {
         grid-template-columns: 1fr;
+        gap: clamp(40px, 5vw, 80px);
     }
 
     .hero__art {
-        display: none;
+        order: -1;
+        width: 100%;
+    }
+
+    .hero__art img {
+        width: 100%;
+        max-width: 100%;
     }
 
     .services-grid {
@@ -794,5 +803,25 @@ section {
 
     .avatar {
         width: 132px;
+    }
+
+    .contact__inner {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    .contact-illustration {
+        order: 2;
+        width: 100%;
+        max-width: 252px;
+    }
+
+    .section-heading {
+        order: 1;
+    }
+
+    .contact .btn {
+        order: 3;
     }
 }
