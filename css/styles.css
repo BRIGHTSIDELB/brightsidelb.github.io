@@ -240,7 +240,7 @@ section {
 .hero {
     position: relative;
     margin-top: 0;
-    padding: 56px 160px;
+    padding: clamp(56px, 10vw, 108px) clamp(24px, 6vw, 96px);
     min-height: 420px;
     text-align: left;
     background: #FFFFFF;
@@ -264,7 +264,7 @@ section {
     display: grid;
     grid-template-columns: 1fr auto;
     align-items: center;
-    gap: 80px;
+    gap: clamp(40px, 5vw, 80px);
 }
 
 .hero__copy {
@@ -418,13 +418,22 @@ section {
 .service-card p,
 .process-card p,
 .feature-copy p,
-.contact p,
 .intro-copy p {
     margin: 0;
     font-family: 'Aktiv_Grotesk', Arial, Helvetica, sans-serif;
     color: #272a2e;
     line-height: 24px;
     font-size: 16px;
+    letter-spacing: 0;
+    font-weight: 400;
+}
+
+.contact p {
+    margin: 0;
+    font-family: 'Aktiv_Grotesk', Arial, Helvetica, sans-serif;
+    color: #272a2e;
+    line-height: 28px;
+    font-size: 20px;
     letter-spacing: 0;
     font-weight: 400;
 }
@@ -508,9 +517,10 @@ section {
 }
 
 .process-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 24px;
+    display: flex;
+    justify-content: center;
+    gap: 48px;
+    flex-wrap: wrap;
 }
 
 .process-card {
@@ -518,6 +528,11 @@ section {
     border-top: 5px solid #de1850;
     border-radius: 0 0 8px 8px;
     padding: 32px;
+    width: 368px;
+    height: 262px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     box-shadow: 0 4px 4px rgba(12, 12, 13, 0.05), 0 16px 16px rgba(12, 12, 13, 0.1);
 }
 
@@ -623,12 +638,14 @@ section {
 }
 
 .footer {
-    padding: 48px clamp(24px, 6vw, 96px);
+    padding: 32px clamp(24px, 6vw, 96px);
     text-align: center;
     font-family: 'Aktiv_Grotesk', Arial, Helvetica, sans-serif;
     color: #272a2e;
-    font-size: 16px;
-    line-height: 24px;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 400;
+    letter-spacing: 0;
     background: #FFFFFF;
     border-top: 1px solid rgba(0, 0, 0, 0.05);
 }
