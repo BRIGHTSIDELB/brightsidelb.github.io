@@ -20,16 +20,31 @@
                 </a>
             </h1>
             <nav class="site-nav" aria-label="Primary">
-                <a href="#services">Services</a>
-                <a href="#clients">Our clients</a>
-                <a href="#process">Process</a>
-                <a href="#about">About</a>
-                <a class="btn" href="mailto:contact@brightsidelb.com?subject=Hello!" target="_blank" aria-label="Contact us">
-                    <span class="site-nav__contact-label">Contact us</span>
-                    <svg class="site-nav__contact-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-                        <path d="M1 3.6A1.6 1.6 0 0 1 2.6 2h10.8A1.6 1.6 0 0 1 15 3.6v8.8a1.6 1.6 0 0 1-1.6 1.6H2.6A1.6 1.6 0 0 1 1 12.4V3.6Zm1.8-.2 5.2 4 5.2-4H2.8Zm10.6 1.4-4.6 3.5a1.4 1.4 0 0 1-1.6 0L2.6 4.8v7.6h10.8V4.8Z" fill="currentColor"/>
-                    </svg>
-                </a>
+                <button
+                    class="site-nav__menu-toggle"
+                    type="button"
+                    aria-expanded="false"
+                    aria-controls="site-nav-links"
+                    aria-label="Open menu"
+                >
+                    <span class="site-nav__menu-icon" aria-hidden="true">
+                        <span class="site-nav__menu-line site-nav__menu-line--top"></span>
+                        <span class="site-nav__menu-line site-nav__menu-line--middle"></span>
+                        <span class="site-nav__menu-line site-nav__menu-line--bottom"></span>
+                    </span>
+                </button>
+                <div class="site-nav__links" id="site-nav-links">
+                    <a href="#services">Services</a>
+                    <a href="#clients">Our clients</a>
+                    <a href="#process">Process</a>
+                    <a href="#about">About</a>
+                    <a class="btn" href="mailto:contact@brightsidelb.com?subject=Hello!" target="_blank" aria-label="Contact us">
+                        <span class="site-nav__contact-label">Contact us</span>
+                        <svg class="site-nav__contact-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                            <path d="M1 3.6A1.6 1.6 0 0 1 2.6 2h10.8A1.6 1.6 0 0 1 15 3.6v8.8a1.6 1.6 0 0 1-1.6 1.6H2.6A1.6 1.6 0 0 1 1 12.4V3.6Zm1.8-.2 5.2 4 5.2-4H2.8Zm10.6 1.4-4.6 3.5a1.4 1.4 0 0 1-1.6 0L2.6 4.8v7.6h10.8V4.8Z" fill="currentColor"/>
+                        </svg>
+                    </a>
+                </div>
             </nav>
         </div>
     </header>
@@ -170,6 +185,10 @@
     </footer>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            var header = document.querySelector('.site-header');
+            var siteNav = document.querySelector('.site-nav');
+            var menuToggle = document.querySelector('.site-nav__menu-toggle');
+            var navLinks = document.querySelectorAll('.site-nav__links a[href^="#"]');
             var headings = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
             headings.forEach(function (heading) {
                 if (!heading.hasAttribute('tabindex')) {
@@ -177,24 +196,115 @@
                 }
             });
 
+            function getHeaderOffset() {
+                if (!header) {
+                    return 0;
+                }
+
+                return Math.ceil(header.getBoundingClientRect().height) + 12;
+            }
+
+            function closeMenu() {
+                if (!siteNav || !menuToggle) {
+                    return;
+                }
+
+                siteNav.classList.remove('is-open');
+                document.body.classList.remove('menu-open');
+                menuToggle.setAttribute('aria-expanded', 'false');
+                menuToggle.setAttribute('aria-label', 'Open menu');
+            }
+
+            function openMenu() {
+                if (!siteNav || !menuToggle) {
+                    return;
+                }
+
+                siteNav.classList.add('is-open');
+                document.body.classList.add('menu-open');
+                menuToggle.setAttribute('aria-expanded', 'true');
+                menuToggle.setAttribute('aria-label', 'Close menu');
+            }
+
+            function toggleMenu() {
+                if (!siteNav || !menuToggle) {
+                    return;
+                }
+
+                if (siteNav.classList.contains('is-open')) {
+                    closeMenu();
+                } else {
+                    openMenu();
+                }
+            }
+
+            function scrollToTarget(hash) {
+                var target = document.querySelector(hash);
+
+                if (!target) {
+                    return;
+                }
+
+                var top = window.scrollY + target.getBoundingClientRect().top - getHeaderOffset();
+                window.scrollTo({ top: Math.max(top, 0), behavior: 'smooth' });
+                if (history.pushState) {
+                    history.pushState(null, '', hash);
+                }
+            }
+
             var skipLink = document.querySelector('.skip-link');
             var mainContent = document.getElementById('main-content');
-            if (!skipLink || !mainContent) {
-                return;
+
+            if (skipLink && mainContent) {
+                function activateSkip(event) {
+                    event.preventDefault();
+                    mainContent.focus({ preventScroll: true });
+                    mainContent.scrollIntoView({ block: 'start' });
+                }
+
+                skipLink.addEventListener('click', activateSkip);
+                skipLink.addEventListener('keydown', function (event) {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                        activateSkip(event);
+                    }
+                });
             }
 
-            function activateSkip(event) {
-                event.preventDefault();
-                mainContent.focus({ preventScroll: true });
-                mainContent.scrollIntoView({ block: 'start' });
+            if (menuToggle && siteNav) {
+                menuToggle.addEventListener('click', toggleMenu);
             }
 
-            skipLink.addEventListener('click', activateSkip);
-            skipLink.addEventListener('keydown', function (event) {
-                if (event.key === 'Enter' || event.key === ' ') {
-                    activateSkip(event);
+            navLinks.forEach(function (link) {
+                link.addEventListener('click', function (event) {
+                    var hash = link.getAttribute('href');
+
+                    if (!hash || hash.charAt(0) !== '#') {
+                        return;
+                    }
+
+                    event.preventDefault();
+                    closeMenu();
+                    scrollToTarget(hash);
+                });
+            });
+
+            document.addEventListener('keydown', function (event) {
+                if (event.key === 'Escape') {
+                    closeMenu();
                 }
             });
+
+            window.addEventListener('resize', function () {
+                if (window.innerWidth > 720) {
+                    closeMenu();
+                }
+            });
+
+            if (window.location.hash) {
+                window.requestAnimationFrame(function () {
+                    scrollToTarget(window.location.hash);
+                });
+            }
         });
     </script>
 </body>
