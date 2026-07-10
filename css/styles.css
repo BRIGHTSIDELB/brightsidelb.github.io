@@ -829,10 +829,6 @@ section {
     }
 
     .site-nav__links {
-        display: none;
-    }
-
-    .site-nav.is-open .site-nav__links {
         display: flex;
         position: fixed;
         top: 72px;
@@ -850,6 +846,17 @@ section {
         height: calc(100dvh - 72px);
         min-height: calc(100dvh - 72px);
         overflow-y: auto;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition: opacity 220ms ease, visibility 0s linear 220ms;
+    }
+
+    .site-nav.is-open .site-nav__links {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transition: opacity 220ms ease;
     }
 
     .site-nav__links a {
