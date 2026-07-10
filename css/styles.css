@@ -825,6 +825,7 @@ section {
         z-index: 75;
         width: 42px;
         height: 42px;
+        margin-top: -3px;
     }
 
     .site-nav__links {
