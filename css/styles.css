@@ -253,7 +253,7 @@ h6:focus-visible {
 }
 
 .site-nav__links a.btn {
-    color: var(--link-default);
+    color: #145166;
     opacity: 1;
 }
 
@@ -288,7 +288,7 @@ h6:focus-visible {
     font-size: 20px;
     font-weight: 600;
     background: #31caff;
-    color: var(--link-default);
+    color: #145166;
     box-shadow: none;
     cursor: pointer;
     transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
