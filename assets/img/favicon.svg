@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 768 768" role="img" aria-label="Brightside favicon">
+  <circle cx="384" cy="384" r="384" fill="#e3dddf"/>
+  <text
+    x="50%"
+    y="50%"
+    fill="#ea125f"
+    font-family="Helvetica Neue, Helvetica, Arial, sans-serif"
+    font-size="640"
+    font-weight="400"
+    text-anchor="middle"
+    dominant-baseline="central"
+  >B</text>
+</svg>
