@@ -22,7 +22,7 @@
 
 /* Font stacks for typekit fonts */
 html {
-    font-family: 'Aktiv_Grotesk', 'aktiv-grotesk', Arial, Helvetica, sans-serif;
+    font-family: 'aktiv-grotesk', Arial, Helvetica, sans-serif;
 }
 
 html {
@@ -32,7 +32,7 @@ html {
 
 body {
     margin: 0;
-    font-family: 'Aktiv_Grotesk', Arial, Helvetica, sans-serif;
+    font-family: 'aktiv-grotesk', Arial, Helvetica, sans-serif;
     color: var(--text);
     background:
         radial-gradient(circle at 15% 8%, rgba(255, 255, 255, 0.96), transparent 30%),
@@ -67,7 +67,7 @@ a {
     border-radius: 8px;
     background: #008CD2;
     color: #ffffff;
-    font-family: 'Aktiv_Grotesk', Arial, Helvetica, sans-serif;
+    font-family: 'aktiv-grotesk', Arial, Helvetica, sans-serif;
     font-size: 0.9rem;
     font-weight: 600;
     transform: translateY(-160%);
@@ -131,7 +131,7 @@ h6:focus-visible {
     display: inline-flex;
     align-items: baseline;
     gap: 2px;
-    font-family: 'Aktiv_Grotesk', Arial, Helvetica, sans-serif;
+    font-family: 'aktiv-grotesk', Arial, Helvetica, sans-serif;
     font-size: clamp(1.3rem, 2vw, 1.8rem);
     font-weight: 800;
     text-transform: uppercase;
@@ -245,9 +245,9 @@ h6:focus-visible {
 }
 
 .site-nav__links a {
-    font-family: 'Aktiv_Grotesk', Arial, Helvetica, sans-serif;
+    font-family: 'aktiv-grotesk', Arial, Helvetica, sans-serif;
     font-size: 20px;
-    font-weight: 600;
+    font-weight: 500;
     color: var(--link-default);
     opacity: 1;
 }
@@ -284,9 +284,9 @@ h6:focus-visible {
     padding: 8px 16px;
     border: 1px solid transparent;
     border-radius: 4px;
-    font-family: 'Aktiv_Grotesk', Arial, Helvetica, sans-serif;
+    font-family: 'aktiv-grotesk', Arial, Helvetica, sans-serif;
     font-size: 20px;
-    font-weight: 600;
+    font-weight: 500;
     background: #31caff;
     color: #145166;
     box-shadow: none;
@@ -394,9 +394,9 @@ section {
     margin: 0;
     font-size: 64px;
     line-height: 72px;
-    font-weight: 400;
+    font-weight: 300;
     color: #272a2e;
-    font-family: 'Aktiv_Grotesk', Arial, Helvetica, sans-serif;
+    font-family: 'aktiv-grotesk', Arial, Helvetica, sans-serif;
     font-style: normal;
     letter-spacing: -1.28px;
 }
@@ -408,11 +408,11 @@ section {
 .hero p {
     margin: 0;
     max-width: 38rem;
-    font-family: 'Aktiv_Grotesk', Arial, Helvetica, sans-serif;
+    font-family: 'aktiv-grotesk', Arial, Helvetica, sans-serif;
     font-size: 20px;
     line-height: 28px;
     color: #272a2e;
-    font-weight: 400;
+    font-weight: 300;
 }
 
 .hero .btn {
@@ -433,25 +433,25 @@ section {
 
 .eyebrow {
     margin: 0;
-    font-family: 'Aktiv_Grotesk', Arial, Helvetica, sans-serif;
+    font-family: 'aktiv-grotesk', Arial, Helvetica, sans-serif;
     font-size: 40px;
     line-height: 48px;
     color: #272a2e;
-    font-weight: 400;
+    font-weight: 300;
 }
 
 .section-description {
     margin: 10px 0 0;
     font-size: 20px;
     line-height: 28px;
-    font-weight: 400;
+    font-weight: 300;
     color: #272a2e;
-    font-family: 'Aktiv_Grotesk', Arial, Helvetica, sans-serif;
+    font-family: 'aktiv-grotesk', Arial, Helvetica, sans-serif;
 }
 
 .section-lead {
     margin: 0;
-    font-family: 'Aktiv_Grotesk', Arial, Helvetica, sans-serif;
+    font-family: 'aktiv-grotesk', Arial, Helvetica, sans-serif;
     font-size: 1.125rem;
     line-height: 1.67;
     color: var(--muted);
@@ -512,14 +512,14 @@ section {
     filter: none;
 }
 
-.service-card h3,
-.process-card h3 {
+.service-card .subhead,
+.process-card .subhead {
     margin: 0;
-    font-family: 'Aktiv_Grotesk', Arial, Helvetica, sans-serif;
+    font-family: 'aktiv-grotesk', Arial, Helvetica, sans-serif;
     font-size: 16px;
     line-height: 24px;
     color: #272a2e;
-    font-weight: 600;
+    font-weight: 500;
     font-style: normal;
     letter-spacing: 0;
 }
@@ -529,22 +529,22 @@ section {
 .feature-copy p,
 .intro-copy p {
     margin: 0;
-    font-family: 'Halyard Text', 'Aktiv_Grotesk', Arial, Helvetica, sans-serif;
+    font-family: 'Halyard Text', 'aktiv-grotesk', Arial, Helvetica, sans-serif;
     color: #272a2e;
     line-height: 30px;
     font-size: 18px;
     letter-spacing: 0;
-    font-weight: 400;
+    font-weight: 300;
 }
 
 .contact p {
     max-width: 38rem;
-    font-family: 'Aktiv_Grotesk', Arial, Helvetica, sans-serif;
+    font-family: 'aktiv-grotesk', Arial, Helvetica, sans-serif;
     color: #272a2e;
     line-height: 28px;
     font-size: 20px;
     letter-spacing: 0;
-    font-weight: 400;
+    font-weight: 300;
 }
 
 .service-card p {
@@ -552,10 +552,10 @@ section {
 }
 
 .feature-copy .section-description {
-    font-family: 'Aktiv_Grotesk', Arial, Helvetica, sans-serif;
+    font-family: 'aktiv-grotesk', Arial, Helvetica, sans-serif;
     font-size: 20px;
     line-height: 28px;
-    font-weight: 400;
+    font-weight: 300;
     color: #272a2e;
 }
 
@@ -583,8 +583,8 @@ section {
     font-size: 40px;
     line-height: 48px;
     color: #272a2e;
-    font-weight: 400;
-    font-family: 'Aktiv_Grotesk', Arial, Helvetica, sans-serif;
+    font-weight: 300;
+    font-family: 'aktiv-grotesk', Arial, Helvetica, sans-serif;
     font-style: normal;
     letter-spacing: 0;
 }
@@ -605,7 +605,7 @@ section {
 .contact .eyebrow {
     font-size: 40px;
     color: #272a2e;
-    font-weight: 400;
+    font-weight: 300;
 }
 
 .section-heading .eyebrow + p {
@@ -685,10 +685,10 @@ section {
 .intro-copy .section-description {
     margin-top: 18px;
     margin-bottom: 0;
-    font-family: 'Halyard Text', 'Aktiv_Grotesk', Arial, Helvetica, sans-serif;
+    font-family: 'Halyard Text', 'aktiv-grotesk', Arial, Helvetica, sans-serif;
     font-size: 18px;
     line-height: 30px;
-    font-weight: 400;
+    font-weight: 300;
 }
 
 .feature-copy {
@@ -700,7 +700,7 @@ section {
     font-family: 'Halyard Text', Arial, Helvetica, sans-serif;
     font-size: 18px;
     line-height: 30px;
-    font-weight: 400;
+    font-weight: 300;
     color: #272a2e;
     margin: 0;
 }
@@ -739,8 +739,8 @@ section {
 
 .contact .section-description {
     margin-bottom: 0;
-    font-weight: 400;
-    font-family: 'Aktiv_Grotesk', Arial, Helvetica, sans-serif;
+    font-weight: 300;
+    font-family: 'aktiv-grotesk', Arial, Helvetica, sans-serif;
     font-size: 20px;
     line-height: 28px;
 }
@@ -771,11 +771,11 @@ section {
 .footer {
     padding: 32px clamp(24px, 6vw, 96px);
     text-align: center;
-    font-family: 'Aktiv_Grotesk', Arial, Helvetica, sans-serif;
+    font-family: 'aktiv-grotesk', Arial, Helvetica, sans-serif;
     color: #272a2e;
     font-size: 14px;
     line-height: 20px;
-    font-weight: 400;
+    font-weight: 300;
     letter-spacing: 0;
     background: #FFFFFF;
     border-top: 1px solid rgba(0, 0, 0, 0.05);
