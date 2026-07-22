@@ -1256,14 +1256,6 @@ section {
         filter: none;
     }
 
-    .contact .btn,
-    .hero .btn {
-        min-height: 32px;
-        padding: 4px 12px;
-        font-size: 16px;
-        line-height: 24px;
-    }
-
     .site-nav__links .btn {
         min-height: 50px;
         padding: 8px 16px;
