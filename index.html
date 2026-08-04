@@ -45,12 +45,16 @@
                     <a href="#clients">Our clients</a>
                     <a href="#process">Process</a>
                     <a href="#about">About</a>
-                    <a class="btn" href="mailto:contact@brightsidelb.com?subject=Hello!" target="_blank" aria-label="Contact us">
+                    <button class="btn email-copy-btn" type="button" data-copy-email="contact@brightsidelb.com" aria-label="Copy Brightside email address">
                         <span class="site-nav__contact-label">Contact us</span>
                         <svg class="site-nav__contact-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
                             <path d="M1 3.6A1.6 1.6 0 0 1 2.6 2h10.8A1.6 1.6 0 0 1 15 3.6v8.8a1.6 1.6 0 0 1-1.6 1.6H2.6A1.6 1.6 0 0 1 1 12.4V3.6Zm1.8-.2 5.2 4 5.2-4H2.8Zm10.6 1.4-4.6 3.5a1.4 1.4 0 0 1-1.6 0L2.6 4.8v7.6h10.8V4.8Z" fill="currentColor"/>
                         </svg>
-                    </a>
+                        <span class="email-copy-btn__tooltip" aria-hidden="true">
+                            <span class="email-copy-btn__tooltip-text email-copy-btn__tooltip-text--copy">COPY EMAIL</span>
+                            <span class="email-copy-btn__tooltip-text email-copy-btn__tooltip-text--copied">COPIED!</span>
+                        </span>
+                    </button>
                 </div>
             </nav>
         </div>
@@ -68,9 +72,13 @@
                     </div>
                     <div class="hero__copy-body stack">
                         <p>We are a small, experienced team that embeds with growing companies to do the thinking and the building: design, product, web, and brand.</p>
-                        <a class="btn" href="mailto:contact@brightsidelb.com?subject=Hello!" target="_blank" aria-label="Contact us">
+                        <button class="btn email-copy-btn" type="button" data-copy-email="contact@brightsidelb.com" aria-label="Copy Brightside email address">
                             Contact us
-                        </a>
+                            <span class="email-copy-btn__tooltip" aria-hidden="true">
+                                <span class="email-copy-btn__tooltip-text email-copy-btn__tooltip-text--copy">COPY EMAIL</span>
+                                <span class="email-copy-btn__tooltip-text email-copy-btn__tooltip-text--copied">COPIED!</span>
+                            </span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -181,7 +189,13 @@
                         <h2 class="eyebrow">Ready when you are</h2>
                         <p class="section-description">If your timing and ours line up, we&rsquo;d love to hear what you&rsquo;re working on. Drop us a line. We respond to every note. Usually pretty fast.</p>
                     </div>
-                    <a class="btn" href="mailto:contact@brightsidelb.com?subject=Hello!" target="_blank">contact@brightsidelb.com</a>
+                    <button class="btn email-copy-btn" type="button" data-copy-email="contact@brightsidelb.com" aria-label="Copy Brightside email address">
+                        contact@brightsidelb.com
+                        <span class="email-copy-btn__tooltip" aria-hidden="true">
+                            <span class="email-copy-btn__tooltip-text email-copy-btn__tooltip-text--copy">COPY EMAIL</span>
+                            <span class="email-copy-btn__tooltip-text email-copy-btn__tooltip-text--copied">COPIED!</span>
+                        </span>
+                    </button>
                 </div>
             </div>
         </section>
@@ -196,12 +210,15 @@
             var siteNav = document.querySelector('.site-nav');
             var menuToggle = document.querySelector('.site-nav__menu-toggle');
             var navLinks = document.querySelectorAll('.site-nav__links a[href^="#"]');
+            var copyButtons = document.querySelectorAll('.email-copy-btn[data-copy-email]');
             var headings = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
             headings.forEach(function (heading) {
                 if (!heading.hasAttribute('tabindex')) {
                     heading.setAttribute('tabindex', '0');
                 }
             });
+
+            var copyTimers = new WeakMap();
 
             function getHeaderOffset() {
                 if (!header) {
@@ -259,6 +276,52 @@
                 }
             }
 
+            function copyEmailToClipboard(email) {
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    return navigator.clipboard.writeText(email);
+                }
+
+                var fallbackInput = document.createElement('textarea');
+                fallbackInput.value = email;
+                fallbackInput.setAttribute('readonly', '');
+                fallbackInput.style.position = 'fixed';
+                fallbackInput.style.top = '-9999px';
+                fallbackInput.style.left = '-9999px';
+                document.body.appendChild(fallbackInput);
+                fallbackInput.select();
+
+                try {
+                    document.execCommand('copy');
+                    document.body.removeChild(fallbackInput);
+                    return Promise.resolve();
+                } catch (error) {
+                    document.body.removeChild(fallbackInput);
+                    return Promise.reject(error);
+                }
+            }
+
+            function setCopyState(button, state) {
+                var timer = copyTimers.get(button);
+
+                if (timer) {
+                    window.clearTimeout(timer);
+                    copyTimers.delete(button);
+                }
+
+                if (state) {
+                    button.setAttribute('data-copy-state', state);
+                } else {
+                    button.removeAttribute('data-copy-state');
+                }
+
+                if (state === 'copied') {
+                    copyTimers.set(button, window.setTimeout(function () {
+                        button.removeAttribute('data-copy-state');
+                        copyTimers.delete(button);
+                    }, 2500));
+                }
+            }
+
             var skipLink = document.querySelector('.skip-link');
             var mainContent = document.getElementById('main-content');
 
@@ -280,6 +343,22 @@
             if (menuToggle && siteNav) {
                 menuToggle.addEventListener('click', toggleMenu);
             }
+
+            copyButtons.forEach(function (button) {
+                var email = button.getAttribute('data-copy-email');
+
+                if (!email) {
+                    return;
+                }
+
+                button.addEventListener('click', function () {
+                    copyEmailToClipboard(email).then(function () {
+                        setCopyState(button, 'copied');
+                    }).catch(function () {
+                        setCopyState(button, 'copied');
+                    });
+                });
+            });
 
             navLinks.forEach(function (link) {
                 link.addEventListener('click', function (event) {
