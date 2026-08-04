@@ -219,6 +219,19 @@
             });
 
             var copyTimers = new WeakMap();
+            var copyInteractionModes = new WeakMap();
+
+            function setCopyInteractionMode(button, mode) {
+                if (mode) {
+                    copyInteractionModes.set(button, mode);
+                } else {
+                    copyInteractionModes.delete(button);
+                }
+            }
+
+            function getCopyInteractionMode(button) {
+                return copyInteractionModes.get(button);
+            }
 
             function getHeaderOffset() {
                 if (!header) {
@@ -351,11 +364,37 @@
                     return;
                 }
 
+                button.addEventListener('pointerdown', function (event) {
+                    setCopyInteractionMode(button, event.pointerType === 'touch' ? 'touch' : 'mouse');
+                });
+
+                button.addEventListener('touchstart', function () {
+                    setCopyInteractionMode(button, 'touch');
+                }, { passive: true });
+
+                button.addEventListener('keydown', function (event) {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                        setCopyInteractionMode(button, 'keyboard');
+                    }
+                });
+
                 button.addEventListener('click', function () {
+                    var interactionMode = getCopyInteractionMode(button);
+
                     copyEmailToClipboard(email).then(function () {
-                        setCopyState(button, 'copied');
+                        if (interactionMode === 'touch') {
+                            setCopyState(button, null);
+                        } else {
+                            setCopyState(button, 'copied');
+                        }
                     }).catch(function () {
-                        setCopyState(button, 'copied');
+                        if (interactionMode === 'touch') {
+                            setCopyState(button, null);
+                        } else {
+                            setCopyState(button, 'copied');
+                        }
+                    }).finally(function () {
+                        setCopyInteractionMode(button, null);
                     });
                 });
             });
