@@ -37,6 +37,7 @@ Keep updates small, specific, and easy to scan.
 - Tuned the header, hero, and responsive layouts so desktop and mobile align more consistently with the Figma reference.
 - Added and refined accessibility labels for meaningful illustrations while leaving decorative icons out of the screen reader flow.
 - Matched the How We Work card shadow to the What We Do cards so the visual language stays consistent.
+- Fixed the contact email copy button so touch interactions show the copied confirmation state instead of staying on the pre-copy prompt.
 - Verified changes in the browser as the source of truth, and reloaded stale previews before assuming a change had not landed.
 
 **Lesson:** Keep the session summary at the top-level so future agents can quickly see the broad goals and outcomes before reading the detailed pitfalls.
@@ -294,11 +295,11 @@ Heading→body margin-top: 18px (via .eyebrow + p selector)
 **Lesson:** When a layout starts stacking, the nav interaction should usually switch with it. Do not wait for the smallest mobile breakpoint unless the design explicitly does.
 
 ### ⚠️ Problem: Copy Tooltip Wording On Touch
-**What happened:** The copy-email button used the same tooltip wording for every input type, but touch users should see the confirmation state instead of the pre-copy prompt.
+**What happened:** The copy-email button used the same tooltip wording for every input type, but touch users could still see the pre-copy prompt after tapping because the copied state was not being applied with enough precedence over hover/focus styling.
 
-**Solution:** Keep the touch trigger lightweight and switch the tooltip directly to the copied confirmation on touch-based events, while preserving the desktop hover prompt for mouse and keyboard users.
+**Solution:** Keep the touch trigger lightweight, apply a touch-specific state attribute on pointer/touch events, and make the copied-state CSS explicitly override the hover/focus tooltip rules. Validate the behavior in the browser with a real touch interaction, not just through code inspection.
 
-**Lesson:** Match tooltip wording to the interaction mode. Touch should confirm the action, while hover can still preview it.
+**Lesson:** Match tooltip wording to the interaction mode, and make stateful UI feedback explicit. For touch interactions, the confirmation state should win over hover styling, and browser validation is required because mobile behavior can differ from desktop logic.
 
 ### ⚠️ Problem: Menu Icon Cropping / Size Drift
 **What happened:** The animated hamburger/X toggle visually looked clipped or oversized on mobile Chrome when its internal bar size and container size were adjusted independently.
