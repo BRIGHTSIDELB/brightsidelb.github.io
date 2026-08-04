@@ -484,7 +484,7 @@ section {
     text-align: left;
     background: #FFFFFF;
     box-shadow: none;
-    overflow: hidden;
+    overflow: visible;
 }
 
 .hero .site-shell {
