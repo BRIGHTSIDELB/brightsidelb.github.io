@@ -294,12 +294,12 @@ Heading→body margin-top: 18px (via .eyebrow + p selector)
 
 **Lesson:** When a layout starts stacking, the nav interaction should usually switch with it. Do not wait for the smallest mobile breakpoint unless the design explicitly does.
 
-### ⚠️ Problem: Copy Tooltip Wording On Touch
-**What happened:** The copy-email button used the same tooltip wording for every input type, but touch users could still see the pre-copy prompt after tapping because the copied state was not being applied with enough precedence over hover/focus styling.
+### ⚠️ Problem: Touch Feedback Should Not Show a Preview State
+**What happened:** The copy-email button initially used the same tooltip wording for all input types. On touch devices, that could briefly show the pre-copy prompt before the confirmation state appeared, which felt like an unnecessary intermediate step.
 
-**Solution:** Keep the touch trigger lightweight, apply a touch-specific state attribute on pointer/touch events, make the copied-state CSS explicitly override the hover/focus tooltip rules, and skip the pre-copy tooltip state entirely so touch users go straight to the confirmation. Validate the behavior in the browser with a real touch interaction, not just through code inspection.
+**Solution:** Treat touch and hover as different interaction modes. For touch, skip the preview state entirely and go straight to the confirmation state. Keep hover/focus behavior for pointer-based desktop interactions, and validate the experience in a real touch browser session.
 
-**Lesson:** Match tooltip wording to the interaction mode, and make stateful UI feedback explicit. For touch interactions, the confirmation state should win over hover styling, and the interface should jump straight to the confirmation without showing the pre-copy prompt first.
+**Lesson:** Do not make touch users pass through a hover-style preview state before confirmation. If a control has a confirmation state, touch interactions should enter that state directly and avoid unnecessary intermediate feedback.
 
 ### ⚠️ Problem: Menu Icon Cropping / Size Drift
 **What happened:** The animated hamburger/X toggle visually looked clipped or oversized on mobile Chrome when its internal bar size and container size were adjusted independently.
