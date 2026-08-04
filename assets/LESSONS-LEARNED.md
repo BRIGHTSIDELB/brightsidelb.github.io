@@ -297,9 +297,9 @@ Heading→body margin-top: 18px (via .eyebrow + p selector)
 ### ⚠️ Problem: Copy Tooltip Wording On Touch
 **What happened:** The copy-email button used the same tooltip wording for every input type, but touch users could still see the pre-copy prompt after tapping because the copied state was not being applied with enough precedence over hover/focus styling.
 
-**Solution:** Keep the touch trigger lightweight, apply a touch-specific state attribute on pointer/touch events, and make the copied-state CSS explicitly override the hover/focus tooltip rules. Validate the behavior in the browser with a real touch interaction, not just through code inspection.
+**Solution:** Keep the touch trigger lightweight, apply a touch-specific state attribute on pointer/touch events, make the copied-state CSS explicitly override the hover/focus tooltip rules, and skip the pre-copy tooltip state entirely so touch users go straight to the confirmation. Validate the behavior in the browser with a real touch interaction, not just through code inspection.
 
-**Lesson:** Match tooltip wording to the interaction mode, and make stateful UI feedback explicit. For touch interactions, the confirmation state should win over hover styling, and browser validation is required because mobile behavior can differ from desktop logic.
+**Lesson:** Match tooltip wording to the interaction mode, and make stateful UI feedback explicit. For touch interactions, the confirmation state should win over hover styling, and the interface should jump straight to the confirmation without showing the pre-copy prompt first.
 
 ### ⚠️ Problem: Menu Icon Cropping / Size Drift
 **What happened:** The animated hamburger/X toggle visually looked clipped or oversized on mobile Chrome when its internal bar size and container size were adjusted independently.

@@ -344,9 +344,7 @@
                     button.removeAttribute('data-copy-touch');
                 }
 
-                window.requestAnimationFrame(function () {
-                    setCopyState(button, 'copied');
-                });
+                setCopyState(button, 'copied');
             }
 
             var skipLink = document.querySelector('.skip-link');
