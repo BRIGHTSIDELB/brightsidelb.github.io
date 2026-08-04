@@ -325,14 +325,28 @@
                     button.setAttribute('data-copy-state', state);
                 } else {
                     button.removeAttribute('data-copy-state');
+                    button.removeAttribute('data-copy-touch');
                 }
 
                 if (state === 'copied') {
                     copyTimers.set(button, window.setTimeout(function () {
                         button.removeAttribute('data-copy-state');
+                        button.removeAttribute('data-copy-touch');
                         copyTimers.delete(button);
                     }, 2500));
                 }
+            }
+
+            function applyCopyFeedback(button, interactionMode) {
+                if (interactionMode === 'touch') {
+                    button.setAttribute('data-copy-touch', 'true');
+                } else {
+                    button.removeAttribute('data-copy-touch');
+                }
+
+                window.requestAnimationFrame(function () {
+                    setCopyState(button, 'copied');
+                });
             }
 
             var skipLink = document.querySelector('.skip-link');
@@ -366,10 +380,15 @@
 
                 button.addEventListener('pointerdown', function (event) {
                     setCopyInteractionMode(button, event.pointerType === 'touch' ? 'touch' : 'mouse');
+
+                    if (event.pointerType === 'touch') {
+                        button.setAttribute('data-copy-touch', 'true');
+                    }
                 });
 
                 button.addEventListener('touchstart', function () {
                     setCopyInteractionMode(button, 'touch');
+                    button.setAttribute('data-copy-touch', 'true');
                 }, { passive: true });
 
                 button.addEventListener('keydown', function (event) {
@@ -382,17 +401,9 @@
                     var interactionMode = getCopyInteractionMode(button);
 
                     copyEmailToClipboard(email).then(function () {
-                        if (interactionMode === 'touch') {
-                            setCopyState(button, null);
-                        } else {
-                            setCopyState(button, 'copied');
-                        }
+                        applyCopyFeedback(button, interactionMode);
                     }).catch(function () {
-                        if (interactionMode === 'touch') {
-                            setCopyState(button, null);
-                        } else {
-                            setCopyState(button, 'copied');
-                        }
+                        applyCopyFeedback(button, interactionMode);
                     }).finally(function () {
                         setCopyInteractionMode(button, null);
                     });

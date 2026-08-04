@@ -402,25 +402,33 @@ h6:focus-visible {
 }
 
 .email-copy-btn:hover .email-copy-btn__tooltip,
-.email-copy-btn:focus-visible .email-copy-btn__tooltip,
+.email-copy-btn:focus-visible .email-copy-btn__tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 0);
+    transition-delay: 0s;
+}
+ 
+.email-copy-btn:hover .email-copy-btn__tooltip-text--copy,
+.email-copy-btn:focus-visible .email-copy-btn__tooltip-text--copy {
+    opacity: 1;
+    transform: translateY(0);
+}
+ 
 .email-copy-btn[data-copy-state="copied"] .email-copy-btn__tooltip {
     opacity: 1;
     visibility: visible;
     transform: translate(-50%, 0);
     transition-delay: 0s;
 }
-
-.email-copy-btn:hover .email-copy-btn__tooltip-text--copy,
-.email-copy-btn:focus-visible .email-copy-btn__tooltip-text--copy {
-    opacity: 1;
-    transform: translateY(0);
-}
-
+ 
+.email-copy-btn[data-copy-touch="true"][data-copy-state="copied"] .email-copy-btn__tooltip-text--copy,
 .email-copy-btn[data-copy-state="copied"] .email-copy-btn__tooltip-text--copy {
     opacity: 0;
     transform: translateY(-4px);
 }
-
+ 
+.email-copy-btn[data-copy-touch="true"][data-copy-state="copied"] .email-copy-btn__tooltip-text--copied,
 .email-copy-btn[data-copy-state="copied"] .email-copy-btn__tooltip-text--copied {
     opacity: 1;
     transform: translateY(0);
