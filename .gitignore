@@ -12,6 +12,9 @@
 *.sublime-project
 *.sublime-workspace
 
+# Local VS Code launch/task config for the test server
+.vscode/tasks.json
+
 # Local documentation (regularly updated, not tracked)
 assets/LESSONS-LEARNED.md
 

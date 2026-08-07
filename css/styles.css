@@ -779,6 +779,10 @@ section {
     margin-bottom: 18px;
 }
 
+.intro-copy .section-heading p {
+    text-align: left;
+}
+
 .contact .section-heading {
     text-align: center;
     margin-bottom: 18px;
@@ -788,8 +792,21 @@ section {
 .intro-copy .eyebrow,
 .contact .eyebrow {
     font-size: 40px;
+    line-height: 48px;
     color: var(--text);
     font-weight: 300;
+}
+
+.contact-title-break {
+    display: none;
+}
+
+.hero-title-break {
+    display: none;
+}
+
+.intro-copy-break {
+    display: none;
 }
 
 .section-heading .eyebrow + p {
@@ -842,10 +859,11 @@ section {
     border-top: 4px solid var(--card-accent-line);
     border-radius: 0 0 8px 8px;
     padding: 32px;
-    height: 262px;
+    min-height: 262px;
+    height: auto;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
@@ -868,7 +886,7 @@ section {
     }
 
     .hero__copy-body {
-        margin-top: 0;
+        margin-top: 24px;
     }
 
     .hero__art {
@@ -942,6 +960,24 @@ section {
     font-weight: 300;
     color: var(--text);
     margin: 0;
+}
+
+.feature-copy__body,
+.feature-copy__list {
+    font-family: 'aktiv-grotesk', Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    line-height: 28px;
+    font-weight: 300;
+    color: var(--text);
+}
+
+#clients .feature-copy p.feature-copy__body {
+    margin: 0 0 10px;
+}
+
+.feature-copy__list {
+    margin: 0;
+    padding-left: 1.25em;
 }
 
 .feature-copy p + p {
@@ -1048,14 +1084,47 @@ section {
 
     .hero__copy {
         margin-top: 0;
+        text-align: center;
     }
 
     .hero__art {
-        justify-self: center;
+        width: 100%;
+        justify-self: stretch;
+        display: flex;
+        justify-content: center;
     }
 
     .hero__art img {
         width: min(100%, 420px);
+        display: block;
+        margin: 0 auto;
+    }
+
+    .hero .btn {
+        margin-top: 30px;
+        align-self: center;
+        justify-self: center;
+    }
+
+    .hero p {
+        max-width: 100%;
+    }
+
+    .intro-copy {
+        max-width: 100%;
+    }
+
+    .feature-copy .section-heading,
+    .intro-copy .section-heading {
+        text-align: center;
+    }
+
+    .intro-copy .section-heading p {
+        text-align: center;
+    }
+
+    .intro-copy .section-heading p + p {
+        text-align: left;
     }
 
     .site-header__inner {
@@ -1238,6 +1307,7 @@ section {
         grid-column: 1;
         grid-row: auto;
         margin-top: 0;
+        text-align: center;
     }
 
     .hero__copy-body {
@@ -1257,7 +1327,7 @@ section {
     }
 
     .hero__art img {
-        width: min(100%, 225px);
+        width: min(100%, 270px);
         display: block;
         margin: 0 auto;
     }
@@ -1275,7 +1345,15 @@ section {
 
     .hero h2 {
         font-size: 40px;
-        line-height: 40px;
+        line-height: 48px;
+    }
+
+    .hero-title-break--mobile {
+        display: inline;
+    }
+
+    .contact-title-break--mobile {
+        display: inline;
     }
 
     .hero p,
@@ -1284,6 +1362,8 @@ section {
     .service-card p,
     .process-card p,
     .feature-copy p,
+    .feature-copy__body,
+    .feature-copy__list,
     .contact p,
     .intro-copy p {
         font-size: 20px;
@@ -1308,8 +1388,8 @@ section {
         row-gap: 24px;
     }
 
-    .feature-copy .section-heading {
-        text-align: left;
+    .intro-copy-break--mobile {
+        display: inline;
     }
 
     .feature-art {
@@ -1335,7 +1415,7 @@ section {
     .process-card {
         padding: 32px;
         min-height: 262px;
-        height: 262px;
+        height: auto;
     }
 
     .section-heading {
