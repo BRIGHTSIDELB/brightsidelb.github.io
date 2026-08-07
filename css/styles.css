@@ -1095,9 +1095,14 @@ section {
     }
 
     .hero__art img {
-        width: min(100%, 420px);
+        width: min(100%, 240px);
         display: block;
         margin: 0 auto;
+    }
+
+    .hero h2 {
+        font-size: 52px;
+        line-height: 1.2;
     }
 
     .hero .btn {
@@ -1327,7 +1332,7 @@ section {
     }
 
     .hero__art img {
-        width: min(100%, 270px);
+        width: min(100%, 240px);
         display: block;
         margin: 0 auto;
     }
@@ -1344,8 +1349,8 @@ section {
     }
 
     .hero h2 {
-        font-size: 40px;
-        line-height: 48px;
+        font-size: 52px;
+        line-height: 1.2;
     }
 
     .hero-title-break--mobile {
