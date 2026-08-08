@@ -1111,6 +1111,14 @@ section {
         max-width: 100%;
     }
 
+    .hero__copy-body > .hero__lead {
+        text-align: center;
+    }
+
+    .hero__copy-body > p + p {
+        text-align: left;
+    }
+
     .intro-copy {
         max-width: 100%;
     }
