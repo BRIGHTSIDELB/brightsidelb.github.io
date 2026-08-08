@@ -940,12 +940,8 @@ section {
 }
 
 .intro-copy .section-description {
-    margin-top: 18px;
+    margin-top: 10px;
     margin-bottom: 0;
-    font-family: 'Halyard Text', 'aktiv-grotesk', Arial, Helvetica, sans-serif;
-    font-size: 18px;
-    line-height: 30px;
-    font-weight: 300;
 }
 
 .feature-copy {
