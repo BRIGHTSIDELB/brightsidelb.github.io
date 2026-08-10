@@ -73,12 +73,8 @@
                     <div class="hero__copy-body stack">
                         <p class="hero__lead"><strong>Strategy, design, and delivery for organizations doing work that matters.</strong></p>
                         <p>Brightside helps mission-driven organizations, public health teams, and research programs turn complex ideas into clear digital experiences, practical systems, and work they can sustain.</p>
-                        <button class="btn email-copy-btn" type="button" data-copy-email="contact@brightsidelb.com" aria-label="Copy Brightside email address">
-                            Contact us
-                            <span class="email-copy-btn__tooltip" aria-hidden="true">
-                                <span class="email-copy-btn__tooltip-text email-copy-btn__tooltip-text--copy">COPY EMAIL</span>
-                                <span class="email-copy-btn__tooltip-text email-copy-btn__tooltip-text--copied">COPIED!</span>
-                            </span>
+                        <button class="btn" type="button" data-scroll-target="#services" aria-label="See how we help by going to Our Services">
+                            See how we help
                         </button>
                     </div>
                 </div>
@@ -223,6 +219,7 @@
             var menuToggle = document.querySelector('.site-nav__menu-toggle');
             var navLinks = document.querySelectorAll('.site-nav__links a[href^="#"]');
             var copyButtons = document.querySelectorAll('.email-copy-btn[data-copy-email]');
+            var scrollButtons = document.querySelectorAll('button[data-scroll-target^="#"]');
             var headings = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
             headings.forEach(function (heading) {
                 if (!heading.hasAttribute('tabindex')) {
@@ -431,6 +428,19 @@
                     event.preventDefault();
                     closeMenu();
                     scrollToTarget(hash);
+                });
+            });
+
+            scrollButtons.forEach(function (button) {
+                button.addEventListener('click', function () {
+                    var targetHash = button.getAttribute('data-scroll-target');
+
+                    if (!targetHash || targetHash.charAt(0) !== '#') {
+                        return;
+                    }
+
+                    closeMenu();
+                    scrollToTarget(targetHash);
                 });
             });
 

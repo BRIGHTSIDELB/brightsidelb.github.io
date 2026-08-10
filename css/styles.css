@@ -219,7 +219,7 @@ h6:focus-visible {
     transform: none;
 }
 
-@media (max-width: 1040px) {
+@media (max-width: 1070px) {
     :root {
         --header-height: 84px;
         --mobile-header-row-height: 56px;
@@ -1160,6 +1160,7 @@ section {
 @media (max-width: 900px) {
     :root {
         --header-height: 84px;
+        --mobile-header-row-height: 56px;
     }
 
     .hero {
@@ -1243,9 +1244,26 @@ section {
         min-height: var(--header-height);
     }
 
+    .site-header h1 {
+        display: flex;
+        align-items: center;
+        height: var(--mobile-header-row-height);
+    }
+
+    .brand {
+        height: 100%;
+        align-items: center;
+    }
+
     .brand img {
-        width: clamp(140px, 22vw, 193px);
-        height: auto;
+        width: auto;
+        height: 100%;
+        max-height: var(--mobile-header-row-height);
+    }
+
+    .site-nav {
+        height: var(--mobile-header-row-height);
+        align-items: center;
     }
 
     .feature__inner,
@@ -1303,6 +1321,7 @@ section {
         height: 100%;
         margin-top: 0;
         align-self: center;
+        transform: none;
     }
 
     .site-nav__links {
