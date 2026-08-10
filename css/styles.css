@@ -178,7 +178,7 @@ h6:focus-visible {
     align-items: center;
     width: 100%;
     gap: 32px;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: flex-end;
 }
 
@@ -216,7 +216,110 @@ h6:focus-visible {
     width: 24px;
     height: 20px;
     display: block;
-    transform: translateY(1px);
+    transform: none;
+}
+
+@media (max-width: 1040px) {
+    :root {
+        --header-height: 84px;
+        --mobile-header-row-height: 56px;
+    }
+
+    .site-header__inner {
+        min-height: var(--header-height);
+    }
+
+    .site-header h1 {
+        display: flex;
+        align-items: center;
+        height: var(--mobile-header-row-height);
+    }
+
+    .brand {
+        height: 100%;
+        align-items: center;
+    }
+
+    .brand img {
+        width: auto;
+        height: 100%;
+        max-height: var(--mobile-header-row-height);
+    }
+
+    .site-nav {
+        height: var(--mobile-header-row-height);
+        align-items: center;
+    }
+
+    .site-nav__menu-toggle {
+        display: inline-flex;
+        position: relative;
+        z-index: 75;
+        width: 42px;
+        height: 100%;
+        margin-top: 0;
+        align-self: center;
+        transform: none;
+    }
+
+    .site-nav__links {
+        display: flex;
+        position: fixed;
+        top: var(--header-height);
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 70;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 40px;
+        padding: 32px 16px;
+        background: #f5f9ff;
+        width: 100vw;
+        height: calc(100dvh - var(--header-height));
+        min-height: calc(100dvh - var(--header-height));
+        overflow-y: auto;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition: opacity 220ms ease, visibility 0s linear 220ms;
+    }
+
+    .site-nav.is-open .site-nav__links {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transition: opacity 220ms ease;
+    }
+
+    .site-nav__links a {
+        font-size: 20px;
+        line-height: 28px;
+        color: var(--link-default);
+        white-space: nowrap;
+    }
+
+    .site-nav__links .btn {
+        width: auto;
+        min-height: 50px;
+        padding: 8px 16px;
+        border-radius: 4px;
+        box-shadow: none;
+        background: var(--button-default);
+    }
+
+    .site-nav__contact-label {
+        display: inline;
+    }
+
+    .site-nav__contact-icon {
+        display: none;
+    }
+
+    .site-nav .email-copy-btn {
+        min-width: 0;
+    }
 }
 
 .site-nav__menu-line {
@@ -1197,8 +1300,9 @@ section {
         position: relative;
         z-index: 75;
         width: 42px;
-        height: 42px;
-        margin-top: -3px;
+        height: 100%;
+        margin-top: 0;
+        align-self: center;
     }
 
     .site-nav__links {
@@ -1263,7 +1367,8 @@ section {
 
 @media (max-width: 720px) {
     :root {
-        --header-height: 72px;
+        --header-height: 84px;
+        --mobile-header-row-height: 56px;
         --content-gutter: 16px;
     }
 
@@ -1271,16 +1376,15 @@ section {
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-        padding: 16px 0 16px 0;
-        padding-left: 0 !important;
+        padding: 0;
         min-height: var(--header-height);
         gap: 10px;
         min-width: 0;
     }
 
     .brand img {
-        width: clamp(140px, 46vw, 193px);
-        height: auto;
+        width: auto;
+        height: 100%;
     }
 
     .site-nav {
@@ -1290,6 +1394,7 @@ section {
     .site-nav__menu-toggle {
         margin-top: 0;
         align-self: center;
+        transform: none;
     }
 
     .site-nav {
