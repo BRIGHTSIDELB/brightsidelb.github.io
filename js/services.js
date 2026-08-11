@@ -25,6 +25,8 @@
             var copyTimers = new WeakMap();
             var copyInteractionModes = new WeakMap();
             var contactCtaPreviewTimer = null;
+            var contactCtaVisibilityObserver = null;
+            var contactCtaVisibilityTimeout = null;
 
             function setCopyInteractionMode(button, mode) {
                 if (mode) {
@@ -87,8 +89,10 @@
                     return;
                 }
 
-                var top = window.scrollY + target.getBoundingClientRect().top - getHeaderOffset();
+                var headerOffset = getHeaderOffset();
+                var top = window.scrollY + target.getBoundingClientRect().top - headerOffset;
                 window.scrollTo({ top: Math.max(top, 0), behavior: 'smooth' });
+
                 if (history.pushState) {
                     history.pushState(null, '', hash);
                 }
@@ -107,131 +111,321 @@
                 fallbackInput.style.left = '-9999px';
                 document.body.appendChild(fallbackInput);
                 fallbackInput.select();
-                fallbackInput.setSelectionRange(0, fallbackInput.value.length);
 
                 try {
                     document.execCommand('copy');
-                } finally {
                     document.body.removeChild(fallbackInput);
+                    return Promise.resolve();
+                } catch (error) {
+                    document.body.removeChild(fallbackInput);
+                    return Promise.reject(error);
                 }
-
-                return Promise.resolve();
             }
 
-            function clearCopyState(button) {
-                button.removeAttribute('data-copy-state');
-                button.removeAttribute('data-copy-preview');
-                button.removeAttribute('data-copy-touch');
-            }
+            function setCopyState(button, state) {
+                var timer = copyTimers.get(button);
 
-            function clearCopyTimer(button) {
-                var existingTimer = copyTimers.get(button);
-
-                if (existingTimer) {
-                    window.clearTimeout(existingTimer);
+                if (timer) {
+                    window.clearTimeout(timer);
                     copyTimers.delete(button);
                 }
+
+                if (state) {
+                    button.setAttribute('data-copy-state', state);
+                } else {
+                    button.removeAttribute('data-copy-state');
+                    button.removeAttribute('data-copy-touch');
+                }
+
+                if (state === 'copied') {
+                    copyTimers.set(button, window.setTimeout(function () {
+                        button.removeAttribute('data-copy-state');
+                        button.removeAttribute('data-copy-touch');
+                        copyTimers.delete(button);
+                    }, 2500));
+                }
             }
 
-            function showCopySuccess(button, isTouchInteraction) {
-                clearCopyTimer(button);
-                button.setAttribute('data-copy-state', 'copied');
-
-                if (isTouchInteraction) {
+            function applyCopyFeedback(button, interactionMode) {
+                if (interactionMode === 'touch') {
                     button.setAttribute('data-copy-touch', 'true');
                 } else {
                     button.removeAttribute('data-copy-touch');
                 }
 
-                var resetTimer = window.setTimeout(function () {
-                    clearCopyState(button);
-                    copyTimers.delete(button);
-                }, 1800);
-                copyTimers.set(button, resetTimer);
+                setCopyState(button, 'copied');
             }
 
-            function handleCopyButton(button, event) {
+            function clearContactCtaPreview() {
+                if (contactCtaPreviewTimer) {
+                    window.clearTimeout(contactCtaPreviewTimer);
+                    contactCtaPreviewTimer = null;
+                }
+
+                if (contactSectionCta) {
+                    contactSectionCta.removeAttribute('data-copy-preview');
+                }
+            }
+
+            function clearContactCtaVisibilityWatcher() {
+                if (contactCtaVisibilityObserver) {
+                    contactCtaVisibilityObserver.disconnect();
+                    contactCtaVisibilityObserver = null;
+                }
+
+                if (contactCtaVisibilityTimeout) {
+                    window.clearTimeout(contactCtaVisibilityTimeout);
+                    contactCtaVisibilityTimeout = null;
+                }
+            }
+
+            function isContactCtaInView() {
+                if (!contactSectionCta) {
+                    return false;
+                }
+
+                var rect = contactSectionCta.getBoundingClientRect();
+                var headerOffset = getHeaderOffset();
+                var viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+
+                return rect.bottom > headerOffset && rect.top < viewportHeight;
+            }
+
+            function showContactCtaPreview() {
+                if (!contactSectionCta) {
+                    return;
+                }
+
+                clearContactCtaPreview();
+                contactSectionCta.setAttribute('data-copy-preview', 'true');
+
+                contactCtaPreviewTimer = window.setTimeout(function () {
+                    clearContactCtaPreview();
+                }, 2800);
+            }
+
+            function showContactCtaCopiedFromNav() {
+                if (!contactSectionCta) {
+                    return;
+                }
+
+                clearContactCtaVisibilityWatcher();
+                clearContactCtaPreview();
+                setCopyInteractionMode(contactSectionCta, 'mouse');
+                applyCopyFeedback(contactSectionCta, 'mouse');
+                setCopyInteractionMode(contactSectionCta, null);
+            }
+
+            function showContactCtaCopiedWhenInView() {
+                if (!contactSectionCta) {
+                    return;
+                }
+
+                clearContactCtaVisibilityWatcher();
+
+                if (isContactCtaInView()) {
+                    showContactCtaCopiedFromNav();
+                    return;
+                }
+
+                if ('IntersectionObserver' in window) {
+                    contactCtaVisibilityObserver = new IntersectionObserver(function (entries) {
+                        entries.forEach(function (entry) {
+                            if (entry.isIntersecting) {
+                                showContactCtaCopiedFromNav();
+                            }
+                        });
+                    }, {
+                        threshold: 0.35,
+                        rootMargin: '-' + getHeaderOffset() + 'px 0px 0px 0px'
+                    });
+
+                    contactCtaVisibilityObserver.observe(contactSectionCta);
+                }
+
+                contactCtaVisibilityTimeout = window.setTimeout(function () {
+                    clearContactCtaVisibilityWatcher();
+
+                    if (isContactCtaInView()) {
+                        showContactCtaCopiedFromNav();
+                    }
+                }, 1800);
+            }
+
+            var skipLink = document.querySelector('.skip-link');
+            var mainContent = document.getElementById('main-content');
+
+            if (skipLink && mainContent) {
+                function activateSkip(event) {
+                    event.preventDefault();
+                    mainContent.focus({ preventScroll: true });
+                    mainContent.scrollIntoView({ block: 'start' });
+                }
+
+                skipLink.addEventListener('click', activateSkip);
+                skipLink.addEventListener('keydown', function (event) {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                        activateSkip(event);
+                    }
+                });
+            }
+
+            if (menuToggle && siteNav) {
+                menuToggle.addEventListener('click', toggleMenu);
+            }
+
+            copyButtons.forEach(function (button) {
                 var email = button.getAttribute('data-copy-email');
 
                 if (!email) {
                     return;
                 }
 
-                clearCopyTimer(button);
-                if (event && event.type === 'pointerdown') {
-                    setCopyInteractionMode(button, event.pointerType || 'mouse');
-                }
+                button.addEventListener('pointerdown', function (event) {
+                    setCopyInteractionMode(button, event.pointerType === 'touch' ? 'touch' : 'mouse');
 
-                copyEmailToClipboard(email).then(function () {
-                    if (button === contactSectionCta) {
-                        button.setAttribute('data-copy-preview', 'true');
-                        if (contactCtaPreviewTimer) {
-                            window.clearTimeout(contactCtaPreviewTimer);
-                        }
-                        contactCtaPreviewTimer = window.setTimeout(function () {
-                            button.removeAttribute('data-copy-preview');
-                        }, 1800);
-                    } else {
-                        showCopySuccess(button, getCopyInteractionMode(button) === 'touch');
+                    if (event.pointerType === 'touch') {
+                        button.setAttribute('data-copy-touch', 'true');
                     }
                 });
-            }
 
-            if (menuToggle) {
-                menuToggle.addEventListener('click', toggleMenu);
-            }
+                button.addEventListener('touchstart', function () {
+                    setCopyInteractionMode(button, 'touch');
+                    button.setAttribute('data-copy-touch', 'true');
+                }, { passive: true });
+
+                button.addEventListener('keydown', function (event) {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                        setCopyInteractionMode(button, 'keyboard');
+                    }
+                });
+
+                button.addEventListener('click', function () {
+                    var interactionMode = getCopyInteractionMode(button);
+
+                    if (button === contactSectionCta) {
+                        clearContactCtaPreview();
+                    }
+
+                    copyEmailToClipboard(email).then(function () {
+                        applyCopyFeedback(button, interactionMode);
+                    }).catch(function () {
+                        applyCopyFeedback(button, interactionMode);
+                    }).finally(function () {
+                        setCopyInteractionMode(button, null);
+                    });
+                });
+            });
 
             navLinks.forEach(function (link) {
-                link.addEventListener('click', function () {
+                link.addEventListener('click', function (event) {
+                    var hash = link.getAttribute('href');
+
+                    if (!hash || hash.charAt(0) !== '#') {
+                        return;
+                    }
+
+                    event.preventDefault();
                     closeMenu();
+                    scrollToTarget(hash);
                 });
             });
 
             scrollButtons.forEach(function (button) {
                 button.addEventListener('click', function () {
-                    var target = button.getAttribute('data-scroll-target');
+                    var targetHash = button.getAttribute('data-scroll-target');
 
-                    if (target) {
-                        scrollToTarget(target);
+                    if (!targetHash || targetHash.charAt(0) !== '#') {
+                        return;
                     }
-                });
-            });
 
-            if (mobileNavContactButton) {
-                mobileNavContactButton.addEventListener('click', function () {
+                    var shouldPreviewContactCta = (
+                        button === mobileNavContactButton &&
+                        targetHash === '#contact' &&
+                        window.matchMedia('(max-width: 1070px)').matches
+                    );
+
+                    if (shouldPreviewContactCta) {
+                        window.setTimeout(showContactCtaPreview, 420);
+                    } else {
+                        clearContactCtaPreview();
+
+                        if (
+                            button === mobileNavContactButton &&
+                            targetHash === '#contact' &&
+                            window.matchMedia('(min-width: 1071px)').matches
+                        ) {
+                            showContactCtaCopiedWhenInView();
+                        }
+                    }
+
                     closeMenu();
-                });
-            }
-
-            copyButtons.forEach(function (button) {
-                button.addEventListener('pointerdown', function (event) {
-                    setCopyInteractionMode(button, event.pointerType || 'mouse');
-                });
-                button.addEventListener('click', function (event) {
-                    event.preventDefault();
-                    handleCopyButton(button, event);
+                    scrollToTarget(targetHash);
                 });
             });
 
             if (contactSectionCta) {
-                contactSectionCta.addEventListener('click', function (event) {
-                    event.preventDefault();
-                    handleCopyButton(contactSectionCta, event);
+                contactSectionCta.addEventListener('pointerdown', function () {
+                    clearContactCtaVisibilityWatcher();
+                    clearContactCtaPreview();
+                });
+
+                contactSectionCta.addEventListener('focus', function () {
+                    clearContactCtaVisibilityWatcher();
+                    clearContactCtaPreview();
+                });
+
+                contactSectionCta.addEventListener('mouseenter', function () {
+                    clearContactCtaVisibilityWatcher();
+                    clearContactCtaPreview();
                 });
             }
 
-            window.addEventListener('resize', function () {
-                if (window.innerWidth > 1070) {
+            document.addEventListener('pointerdown', function (event) {
+                if (!contactSectionCta || !contactSectionCta.hasAttribute('data-copy-preview')) {
+                    return;
+                }
+
+                if (!contactSectionCta.contains(event.target)) {
+                    clearContactCtaPreview();
+                }
+            });
+
+            document.addEventListener('focusin', function (event) {
+                if (!contactSectionCta || !contactSectionCta.hasAttribute('data-copy-preview')) {
+                    return;
+                }
+
+                if (!contactSectionCta.contains(event.target)) {
+                    clearContactCtaPreview();
+                }
+            });
+
+            document.addEventListener('keydown', function (event) {
+                if (event.key === 'Escape') {
                     closeMenu();
                 }
             });
 
-            window.addEventListener('beforeunload', function () {
-                copyButtons.forEach(function (button) {
-                    clearCopyTimer(button);
-                });
-                if (contactCtaPreviewTimer) {
-                    window.clearTimeout(contactCtaPreviewTimer);
+            window.addEventListener('resize', function () {
+                if (window.innerWidth > 720) {
+                    closeMenu();
                 }
             });
+
+            window.addEventListener('scroll', function () {
+                if (!contactSectionCta || !contactCtaVisibilityObserver) {
+                    return;
+                }
+
+                if (isContactCtaInView()) {
+                    showContactCtaCopiedFromNav();
+                }
+            }, { passive: true });
+
+            if (window.location.hash) {
+                window.requestAnimationFrame(function () {
+                    scrollToTarget(window.location.hash);
+                });
+            }
         });

@@ -25,6 +25,8 @@
             var copyTimers = new WeakMap();
             var copyInteractionModes = new WeakMap();
             var contactCtaPreviewTimer = null;
+            var contactCtaVisibilityObserver = null;
+            var contactCtaVisibilityTimeout = null;
 
             function setCopyInteractionMode(button, mode) {
                 if (mode) {
@@ -87,8 +89,10 @@
                     return;
                 }
 
-                var top = window.scrollY + target.getBoundingClientRect().top - getHeaderOffset();
+                var headerOffset = getHeaderOffset();
+                var top = window.scrollY + target.getBoundingClientRect().top - headerOffset;
                 window.scrollTo({ top: Math.max(top, 0), behavior: 'smooth' });
+
                 if (history.pushState) {
                     history.pushState(null, '', hash);
                 }
@@ -163,6 +167,30 @@
                 }
             }
 
+            function clearContactCtaVisibilityWatcher() {
+                if (contactCtaVisibilityObserver) {
+                    contactCtaVisibilityObserver.disconnect();
+                    contactCtaVisibilityObserver = null;
+                }
+
+                if (contactCtaVisibilityTimeout) {
+                    window.clearTimeout(contactCtaVisibilityTimeout);
+                    contactCtaVisibilityTimeout = null;
+                }
+            }
+
+            function isContactCtaInView() {
+                if (!contactSectionCta) {
+                    return false;
+                }
+
+                var rect = contactSectionCta.getBoundingClientRect();
+                var headerOffset = getHeaderOffset();
+                var viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+
+                return rect.bottom > headerOffset && rect.top < viewportHeight;
+            }
+
             function showContactCtaPreview() {
                 if (!contactSectionCta) {
                     return;
@@ -174,6 +202,54 @@
                 contactCtaPreviewTimer = window.setTimeout(function () {
                     clearContactCtaPreview();
                 }, 2800);
+            }
+
+            function showContactCtaCopiedFromNav() {
+                if (!contactSectionCta) {
+                    return;
+                }
+
+                clearContactCtaVisibilityWatcher();
+                clearContactCtaPreview();
+                setCopyInteractionMode(contactSectionCta, 'mouse');
+                applyCopyFeedback(contactSectionCta, 'mouse');
+                setCopyInteractionMode(contactSectionCta, null);
+            }
+
+            function showContactCtaCopiedWhenInView() {
+                if (!contactSectionCta) {
+                    return;
+                }
+
+                clearContactCtaVisibilityWatcher();
+
+                if (isContactCtaInView()) {
+                    showContactCtaCopiedFromNav();
+                    return;
+                }
+
+                if ('IntersectionObserver' in window) {
+                    contactCtaVisibilityObserver = new IntersectionObserver(function (entries) {
+                        entries.forEach(function (entry) {
+                            if (entry.isIntersecting) {
+                                showContactCtaCopiedFromNav();
+                            }
+                        });
+                    }, {
+                        threshold: 0.35,
+                        rootMargin: '-' + getHeaderOffset() + 'px 0px 0px 0px'
+                    });
+
+                    contactCtaVisibilityObserver.observe(contactSectionCta);
+                }
+
+                contactCtaVisibilityTimeout = window.setTimeout(function () {
+                    clearContactCtaVisibilityWatcher();
+
+                    if (isContactCtaInView()) {
+                        showContactCtaCopiedFromNav();
+                    }
+                }, 1800);
             }
 
             var skipLink = document.querySelector('.skip-link');
@@ -273,6 +349,14 @@
                         window.setTimeout(showContactCtaPreview, 420);
                     } else {
                         clearContactCtaPreview();
+
+                        if (
+                            button === mobileNavContactButton &&
+                            targetHash === '#contact' &&
+                            window.matchMedia('(min-width: 1071px)').matches
+                        ) {
+                            showContactCtaCopiedWhenInView();
+                        }
                     }
 
                     closeMenu();
@@ -282,14 +366,17 @@
 
             if (contactSectionCta) {
                 contactSectionCta.addEventListener('pointerdown', function () {
+                    clearContactCtaVisibilityWatcher();
                     clearContactCtaPreview();
                 });
 
                 contactSectionCta.addEventListener('focus', function () {
+                    clearContactCtaVisibilityWatcher();
                     clearContactCtaPreview();
                 });
 
                 contactSectionCta.addEventListener('mouseenter', function () {
+                    clearContactCtaVisibilityWatcher();
                     clearContactCtaPreview();
                 });
             }
@@ -325,6 +412,16 @@
                     closeMenu();
                 }
             });
+
+            window.addEventListener('scroll', function () {
+                if (!contactSectionCta || !contactCtaVisibilityObserver) {
+                    return;
+                }
+
+                if (isContactCtaInView()) {
+                    showContactCtaCopiedFromNav();
+                }
+            }, { passive: true });
 
             if (window.location.hash) {
                 window.requestAnimationFrame(function () {
