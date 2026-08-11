@@ -526,6 +526,18 @@ h6:focus-visible {
     transform: translate(-50%, 0);
     transition-delay: 0s;
 }
+
+.contact .email-copy-btn[data-copy-preview="true"]:not([data-copy-state="copied"]) .email-copy-btn__tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 0);
+    transition-delay: 0s;
+}
+
+.contact .email-copy-btn[data-copy-preview="true"]:not([data-copy-state="copied"]) .email-copy-btn__tooltip-text--copy {
+    opacity: 1;
+    transform: translateY(0);
+}
  
 .email-copy-btn[data-copy-touch="true"][data-copy-state="copied"] .email-copy-btn__tooltip {
     transition: none;

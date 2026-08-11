@@ -220,6 +220,8 @@
             var navLinks = document.querySelectorAll('.site-nav__links a[href^="#"]');
             var copyButtons = document.querySelectorAll('.email-copy-btn[data-copy-email]');
             var scrollButtons = document.querySelectorAll('button[data-scroll-target^="#"]');
+            var mobileNavContactButton = document.querySelector('.site-nav__links .email-copy-btn[data-scroll-target="#contact"]');
+            var contactSectionCta = document.querySelector('.contact .email-copy-btn[data-copy-email]');
             var headings = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
             headings.forEach(function (heading) {
                 if (!heading.hasAttribute('tabindex')) {
@@ -229,6 +231,7 @@
 
             var copyTimers = new WeakMap();
             var copyInteractionModes = new WeakMap();
+            var contactCtaPreviewTimer = null;
 
             function setCopyInteractionMode(button, mode) {
                 if (mode) {
@@ -356,6 +359,30 @@
                 setCopyState(button, 'copied');
             }
 
+            function clearContactCtaPreview() {
+                if (contactCtaPreviewTimer) {
+                    window.clearTimeout(contactCtaPreviewTimer);
+                    contactCtaPreviewTimer = null;
+                }
+
+                if (contactSectionCta) {
+                    contactSectionCta.removeAttribute('data-copy-preview');
+                }
+            }
+
+            function showContactCtaPreview() {
+                if (!contactSectionCta) {
+                    return;
+                }
+
+                clearContactCtaPreview();
+                contactSectionCta.setAttribute('data-copy-preview', 'true');
+
+                contactCtaPreviewTimer = window.setTimeout(function () {
+                    clearContactCtaPreview();
+                }, 2800);
+            }
+
             var skipLink = document.querySelector('.skip-link');
             var mainContent = document.getElementById('main-content');
 
@@ -407,6 +434,10 @@
                 button.addEventListener('click', function () {
                     var interactionMode = getCopyInteractionMode(button);
 
+                    if (button === contactSectionCta) {
+                        clearContactCtaPreview();
+                    }
+
                     copyEmailToClipboard(email).then(function () {
                         applyCopyFeedback(button, interactionMode);
                     }).catch(function () {
@@ -439,9 +470,55 @@
                         return;
                     }
 
+                    var shouldPreviewContactCta = (
+                        button === mobileNavContactButton &&
+                        targetHash === '#contact' &&
+                        window.matchMedia('(max-width: 1070px)').matches
+                    );
+
+                    if (shouldPreviewContactCta) {
+                        window.setTimeout(showContactCtaPreview, 420);
+                    } else {
+                        clearContactCtaPreview();
+                    }
+
                     closeMenu();
                     scrollToTarget(targetHash);
                 });
+            });
+
+            if (contactSectionCta) {
+                contactSectionCta.addEventListener('pointerdown', function () {
+                    clearContactCtaPreview();
+                });
+
+                contactSectionCta.addEventListener('focus', function () {
+                    clearContactCtaPreview();
+                });
+
+                contactSectionCta.addEventListener('mouseenter', function () {
+                    clearContactCtaPreview();
+                });
+            }
+
+            document.addEventListener('pointerdown', function (event) {
+                if (!contactSectionCta || !contactSectionCta.hasAttribute('data-copy-preview')) {
+                    return;
+                }
+
+                if (!contactSectionCta.contains(event.target)) {
+                    clearContactCtaPreview();
+                }
+            });
+
+            document.addEventListener('focusin', function (event) {
+                if (!contactSectionCta || !contactSectionCta.hasAttribute('data-copy-preview')) {
+                    return;
+                }
+
+                if (!contactSectionCta.contains(event.target)) {
+                    clearContactCtaPreview();
+                }
             });
 
             document.addEventListener('keydown', function (event) {
