@@ -302,15 +302,40 @@
 
                 button.addEventListener('click', function () {
                     var interactionMode = getCopyInteractionMode(button);
+                    var shouldSuppressCopiedFeedback = (
+                        button === mobileNavContactButton &&
+                        window.matchMedia('(max-width: 1070px)').matches
+                    );
+                    var shouldKeepPreviewUntilCopied = (
+                        button === contactSectionCta &&
+                        window.matchMedia('(max-width: 1070px)').matches &&
+                        button.hasAttribute('data-copy-preview')
+                    );
 
-                    if (button === contactSectionCta) {
+                    if (button === contactSectionCta && !shouldKeepPreviewUntilCopied) {
                         clearContactCtaPreview();
                     }
 
                     copyEmailToClipboard(email).then(function () {
-                        applyCopyFeedback(button, interactionMode);
+                        if (shouldSuppressCopiedFeedback) {
+                            setCopyState(button, null);
+                        } else {
+                            applyCopyFeedback(button, interactionMode);
+
+                            if (shouldKeepPreviewUntilCopied) {
+                                clearContactCtaPreview();
+                            }
+                        }
                     }).catch(function () {
-                        applyCopyFeedback(button, interactionMode);
+                        if (shouldSuppressCopiedFeedback) {
+                            setCopyState(button, null);
+                        } else {
+                            applyCopyFeedback(button, interactionMode);
+
+                            if (shouldKeepPreviewUntilCopied) {
+                                clearContactCtaPreview();
+                            }
+                        }
                     }).finally(function () {
                         setCopyInteractionMode(button, null);
                     });
@@ -349,14 +374,6 @@
                         window.setTimeout(showContactCtaPreview, 420);
                     } else {
                         clearContactCtaPreview();
-
-                        if (
-                            button === mobileNavContactButton &&
-                            targetHash === '#contact' &&
-                            window.matchMedia('(min-width: 1071px)').matches
-                        ) {
-                            showContactCtaCopiedWhenInView();
-                        }
                     }
 
                     closeMenu();
