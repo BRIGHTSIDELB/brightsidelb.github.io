@@ -9,13 +9,37 @@
             var contactSectionCta = document.querySelector('.contact .email-copy-btn[data-copy-email]');
             var servicesPageCardTitles = document.querySelectorAll('.services-page__card-title');
             var headings = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
+            var isKeyboardNavigation = false;
+
+            function clearHeadingKeyboardFocus() {
+                headings.forEach(function (heading) {
+                    heading.classList.remove('is-keyboard-focus');
+                });
+            }
+
+            document.addEventListener('keydown', function () {
+                isKeyboardNavigation = true;
+            }, true);
+
+            document.addEventListener('mousedown', function () {
+                isKeyboardNavigation = false;
+                clearHeadingKeyboardFocus();
+            }, true);
+
+            document.addEventListener('touchstart', function () {
+                isKeyboardNavigation = false;
+                clearHeadingKeyboardFocus();
+            }, true);
+
             headings.forEach(function (heading) {
                 if (!heading.hasAttribute('tabindex')) {
                     heading.setAttribute('tabindex', '0');
                 }
 
                 heading.addEventListener('focus', function () {
-                    heading.classList.add('is-keyboard-focus');
+                    if (isKeyboardNavigation || heading.matches(':focus-visible')) {
+                        heading.classList.add('is-keyboard-focus');
+                    }
                 });
 
                 heading.addEventListener('blur', function () {
