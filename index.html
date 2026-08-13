@@ -84,8 +84,8 @@
         <section class="services" id="services">
             <div class="site-shell">
                 <div class="section-heading">
-                    <h2 class="eyebrow">Our Services</h2>
-                    <p class="section-description section-heading__label">We work across four areas:</p>
+                    <h2 class="eyebrow">What we do</h2>
+                    <p class="section-description section-heading__label">We work across four areas, often all at once.</p>
                 </div>
 
                 <div class="services-grid">
@@ -100,7 +100,7 @@
                         <img class="service-card__icon" src="assets/img/what-we-do__innovation.svg" alt="">
                         <div class="service-card__content">
                             <h3 class="subhead card-copy__label">Program &amp; Growth</h3>
-                            <p class="card-copy__body">We help establish work plans, roles, workflows, launch plans, and implementation support. This allows your team to do what they do best.</p>
+                            <p class="card-copy__body">We help establish work plans, workflows, launch plans, and implementation support. This allows your team to do what they do best.</p>
                         </div>
 
                     </article>
@@ -119,6 +119,10 @@
                         </div>
                     </article>
                 </div>
+
+                <div class="services__cta-wrap">
+                    <a class="btn services__cta" href="services.html">Explore our services</a>
+                </div>
             </div>
         </section>
 
@@ -127,7 +131,7 @@
                 <div class="feature-copy">
                     <div class="section-heading">
                         <h2 class="eyebrow">Who we <br class="contact-title-break contact-title-break--mobile">partner with</h2>
-                        <p class="section-description section-heading__label">Our best fit depends less on<br class="contact-title-break contact-title-break--mobile">the organization&rsquo;s size than the work itself.</p>
+                        <p class="section-description section-heading__label">Our best fit depends less on the <br class="contact-title-break contact-title-break--mobile">organization&rsquo;s size than the work itself.</p>
                     </div>
                     <p class="section-description feature-copy__body feature-copy__body--spaced">We thrive on a meaningful goal, defined area where we can help, and a team that shares the value of your mission. This often includes:</p>
                     <ul class="feature-copy__list feature-copy__list--spaced">
@@ -201,6 +205,7 @@
                         Contact us
                         <span class="email-copy-btn__tooltip" aria-hidden="true">
                             <span class="email-copy-btn__tooltip-text email-copy-btn__tooltip-text--copy">COPY EMAIL</span>
+                            <span class="email-copy-btn__tooltip-text email-copy-btn__tooltip-text--mobile-preview">TAP TO COPY EMAIL</span>
                             <span class="email-copy-btn__tooltip-text email-copy-btn__tooltip-text--copied">COPIED!</span>
                         </span>
                     </button>
@@ -209,336 +214,15 @@
         </section>
     </main>
 
-    <footer class="footer">
-        <div class="site-shell">Copyright Brightside Design 2026</div>
+    <footer class="footer" aria-label="Site footer">
+        <div class="footer__inner">
+            <div class="footer__brand">
+                <img class="footer__logo" src="assets/img/brightside__logo.svg" alt="Brightside">
+                <img class="footer__tagline" src="assets/img/Design-Updates__2026-07/v2/Designing%20for%20the%20good.svg" alt="Designing for the good">
+            </div>
+            <p class="footer__copyright">Copyright Brightside Design 2026</p>
+        </div>
     </footer>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var header = document.querySelector('.site-header');
-            var siteNav = document.querySelector('.site-nav');
-            var menuToggle = document.querySelector('.site-nav__menu-toggle');
-            var navLinks = document.querySelectorAll('.site-nav__links a[href^="#"]');
-            var copyButtons = document.querySelectorAll('.email-copy-btn[data-copy-email]');
-            var scrollButtons = document.querySelectorAll('button[data-scroll-target^="#"]');
-            var mobileNavContactButton = document.querySelector('.site-nav__links .email-copy-btn[data-scroll-target="#contact"]');
-            var contactSectionCta = document.querySelector('.contact .email-copy-btn[data-copy-email]');
-            var headings = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
-            headings.forEach(function (heading) {
-                if (!heading.hasAttribute('tabindex')) {
-                    heading.setAttribute('tabindex', '0');
-                }
-            });
-
-            var copyTimers = new WeakMap();
-            var copyInteractionModes = new WeakMap();
-            var contactCtaPreviewTimer = null;
-
-            function setCopyInteractionMode(button, mode) {
-                if (mode) {
-                    copyInteractionModes.set(button, mode);
-                } else {
-                    copyInteractionModes.delete(button);
-                }
-            }
-
-            function getCopyInteractionMode(button) {
-                return copyInteractionModes.get(button);
-            }
-
-            function getHeaderOffset() {
-                if (!header) {
-                    return 0;
-                }
-
-                return Math.ceil(header.getBoundingClientRect().height) + 12;
-            }
-
-            function closeMenu() {
-                if (!siteNav || !menuToggle) {
-                    return;
-                }
-
-                siteNav.classList.remove('is-open');
-                document.body.classList.remove('menu-open');
-                menuToggle.setAttribute('aria-expanded', 'false');
-                menuToggle.setAttribute('aria-label', 'Open menu');
-            }
-
-            function openMenu() {
-                if (!siteNav || !menuToggle) {
-                    return;
-                }
-
-                siteNav.classList.add('is-open');
-                document.body.classList.add('menu-open');
-                menuToggle.setAttribute('aria-expanded', 'true');
-                menuToggle.setAttribute('aria-label', 'Close menu');
-            }
-
-            function toggleMenu() {
-                if (!siteNav || !menuToggle) {
-                    return;
-                }
-
-                if (siteNav.classList.contains('is-open')) {
-                    closeMenu();
-                } else {
-                    openMenu();
-                }
-            }
-
-            function scrollToTarget(hash) {
-                var target = document.querySelector(hash);
-
-                if (!target) {
-                    return;
-                }
-
-                var top = window.scrollY + target.getBoundingClientRect().top - getHeaderOffset();
-                window.scrollTo({ top: Math.max(top, 0), behavior: 'smooth' });
-                if (history.pushState) {
-                    history.pushState(null, '', hash);
-                }
-            }
-
-            function copyEmailToClipboard(email) {
-                if (navigator.clipboard && navigator.clipboard.writeText) {
-                    return navigator.clipboard.writeText(email);
-                }
-
-                var fallbackInput = document.createElement('textarea');
-                fallbackInput.value = email;
-                fallbackInput.setAttribute('readonly', '');
-                fallbackInput.style.position = 'fixed';
-                fallbackInput.style.top = '-9999px';
-                fallbackInput.style.left = '-9999px';
-                document.body.appendChild(fallbackInput);
-                fallbackInput.select();
-
-                try {
-                    document.execCommand('copy');
-                    document.body.removeChild(fallbackInput);
-                    return Promise.resolve();
-                } catch (error) {
-                    document.body.removeChild(fallbackInput);
-                    return Promise.reject(error);
-                }
-            }
-
-            function setCopyState(button, state) {
-                var timer = copyTimers.get(button);
-
-                if (timer) {
-                    window.clearTimeout(timer);
-                    copyTimers.delete(button);
-                }
-
-                if (state) {
-                    button.setAttribute('data-copy-state', state);
-                } else {
-                    button.removeAttribute('data-copy-state');
-                    button.removeAttribute('data-copy-touch');
-                }
-
-                if (state === 'copied') {
-                    copyTimers.set(button, window.setTimeout(function () {
-                        button.removeAttribute('data-copy-state');
-                        button.removeAttribute('data-copy-touch');
-                        copyTimers.delete(button);
-                    }, 2500));
-                }
-            }
-
-            function applyCopyFeedback(button, interactionMode) {
-                if (interactionMode === 'touch') {
-                    button.setAttribute('data-copy-touch', 'true');
-                } else {
-                    button.removeAttribute('data-copy-touch');
-                }
-
-                setCopyState(button, 'copied');
-            }
-
-            function clearContactCtaPreview() {
-                if (contactCtaPreviewTimer) {
-                    window.clearTimeout(contactCtaPreviewTimer);
-                    contactCtaPreviewTimer = null;
-                }
-
-                if (contactSectionCta) {
-                    contactSectionCta.removeAttribute('data-copy-preview');
-                }
-            }
-
-            function showContactCtaPreview() {
-                if (!contactSectionCta) {
-                    return;
-                }
-
-                clearContactCtaPreview();
-                contactSectionCta.setAttribute('data-copy-preview', 'true');
-
-                contactCtaPreviewTimer = window.setTimeout(function () {
-                    clearContactCtaPreview();
-                }, 2800);
-            }
-
-            var skipLink = document.querySelector('.skip-link');
-            var mainContent = document.getElementById('main-content');
-
-            if (skipLink && mainContent) {
-                function activateSkip(event) {
-                    event.preventDefault();
-                    mainContent.focus({ preventScroll: true });
-                    mainContent.scrollIntoView({ block: 'start' });
-                }
-
-                skipLink.addEventListener('click', activateSkip);
-                skipLink.addEventListener('keydown', function (event) {
-                    if (event.key === 'Enter' || event.key === ' ') {
-                        activateSkip(event);
-                    }
-                });
-            }
-
-            if (menuToggle && siteNav) {
-                menuToggle.addEventListener('click', toggleMenu);
-            }
-
-            copyButtons.forEach(function (button) {
-                var email = button.getAttribute('data-copy-email');
-
-                if (!email) {
-                    return;
-                }
-
-                button.addEventListener('pointerdown', function (event) {
-                    setCopyInteractionMode(button, event.pointerType === 'touch' ? 'touch' : 'mouse');
-
-                    if (event.pointerType === 'touch') {
-                        button.setAttribute('data-copy-touch', 'true');
-                    }
-                });
-
-                button.addEventListener('touchstart', function () {
-                    setCopyInteractionMode(button, 'touch');
-                    button.setAttribute('data-copy-touch', 'true');
-                }, { passive: true });
-
-                button.addEventListener('keydown', function (event) {
-                    if (event.key === 'Enter' || event.key === ' ') {
-                        setCopyInteractionMode(button, 'keyboard');
-                    }
-                });
-
-                button.addEventListener('click', function () {
-                    var interactionMode = getCopyInteractionMode(button);
-
-                    if (button === contactSectionCta) {
-                        clearContactCtaPreview();
-                    }
-
-                    copyEmailToClipboard(email).then(function () {
-                        applyCopyFeedback(button, interactionMode);
-                    }).catch(function () {
-                        applyCopyFeedback(button, interactionMode);
-                    }).finally(function () {
-                        setCopyInteractionMode(button, null);
-                    });
-                });
-            });
-
-            navLinks.forEach(function (link) {
-                link.addEventListener('click', function (event) {
-                    var hash = link.getAttribute('href');
-
-                    if (!hash || hash.charAt(0) !== '#') {
-                        return;
-                    }
-
-                    event.preventDefault();
-                    closeMenu();
-                    scrollToTarget(hash);
-                });
-            });
-
-            scrollButtons.forEach(function (button) {
-                button.addEventListener('click', function () {
-                    var targetHash = button.getAttribute('data-scroll-target');
-
-                    if (!targetHash || targetHash.charAt(0) !== '#') {
-                        return;
-                    }
-
-                    var shouldPreviewContactCta = (
-                        button === mobileNavContactButton &&
-                        targetHash === '#contact' &&
-                        window.matchMedia('(max-width: 1070px)').matches
-                    );
-
-                    if (shouldPreviewContactCta) {
-                        window.setTimeout(showContactCtaPreview, 420);
-                    } else {
-                        clearContactCtaPreview();
-                    }
-
-                    closeMenu();
-                    scrollToTarget(targetHash);
-                });
-            });
-
-            if (contactSectionCta) {
-                contactSectionCta.addEventListener('pointerdown', function () {
-                    clearContactCtaPreview();
-                });
-
-                contactSectionCta.addEventListener('focus', function () {
-                    clearContactCtaPreview();
-                });
-
-                contactSectionCta.addEventListener('mouseenter', function () {
-                    clearContactCtaPreview();
-                });
-            }
-
-            document.addEventListener('pointerdown', function (event) {
-                if (!contactSectionCta || !contactSectionCta.hasAttribute('data-copy-preview')) {
-                    return;
-                }
-
-                if (!contactSectionCta.contains(event.target)) {
-                    clearContactCtaPreview();
-                }
-            });
-
-            document.addEventListener('focusin', function (event) {
-                if (!contactSectionCta || !contactSectionCta.hasAttribute('data-copy-preview')) {
-                    return;
-                }
-
-                if (!contactSectionCta.contains(event.target)) {
-                    clearContactCtaPreview();
-                }
-            });
-
-            document.addEventListener('keydown', function (event) {
-                if (event.key === 'Escape') {
-                    closeMenu();
-                }
-            });
-
-            window.addEventListener('resize', function () {
-                if (window.innerWidth > 720) {
-                    closeMenu();
-                }
-            });
-
-            if (window.location.hash) {
-                window.requestAnimationFrame(function () {
-                    scrollToTarget(window.location.hash);
-                });
-            }
-        });
-    </script>
+    <script src="js/index.js"></script>
 </body>
 </html>

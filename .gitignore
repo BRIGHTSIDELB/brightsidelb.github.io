@@ -16,7 +16,7 @@
 .vscode/tasks.json
 
 # Local documentation (regularly updated, not tracked)
-assets/LESSONS-LEARNED.md
+.github/instructions/LESSONS-LEARNED.md
 
 # Old files
 old-index.html
