@@ -1731,6 +1731,16 @@ p.hero__lead {
   border-bottom: 1px solid #1867fb;
 }
 
+.services-page__grid > .services-page__card:last-child {
+  border-bottom: none;
+}
+
+@media (min-width: 901px) {
+  .services-page__grid > .services-page__card:nth-last-child(-n + 2) {
+    border-bottom: none;
+  }
+}
+
 .services-page__icon {
   width: 150px;
   height: 150px;
