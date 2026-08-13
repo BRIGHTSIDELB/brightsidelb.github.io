@@ -7,6 +7,7 @@
             var scrollButtons = document.querySelectorAll('button[data-scroll-target^="#"]');
             var mobileNavContactButton = document.querySelector('.site-nav__links .email-copy-btn[data-scroll-target="#contact"]');
             var contactSectionCta = document.querySelector('.contact .email-copy-btn[data-copy-email]');
+            var servicesPageCardTitles = document.querySelectorAll('.services-page__card-title');
             var headings = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
             headings.forEach(function (heading) {
                 if (!heading.hasAttribute('tabindex')) {
@@ -202,6 +203,61 @@
                 contactCtaPreviewTimer = window.setTimeout(function () {
                     clearContactCtaPreview();
                 }, 2800);
+            }
+
+            function syncRowTitleHeights(titles, shouldAlign) {
+                if (!titles.length) {
+                    return;
+                }
+
+                titles.forEach(function (title) {
+                    title.style.minHeight = '';
+                });
+
+                if (!shouldAlign()) {
+                    return;
+                }
+
+                var rows = [];
+
+                titles.forEach(function (title) {
+                    var titleTop = Math.round(title.getBoundingClientRect().top);
+                    var matchingRow = null;
+
+                    rows.forEach(function (row) {
+                        if (!matchingRow && Math.abs(row.top - titleTop) <= 2) {
+                            matchingRow = row;
+                        }
+                    });
+
+                    if (!matchingRow) {
+                        matchingRow = {
+                            top: titleTop,
+                            items: []
+                        };
+                        rows.push(matchingRow);
+                    }
+
+                    matchingRow.items.push(title);
+                });
+
+                rows.forEach(function (row) {
+                    var maxHeight = 0;
+
+                    row.items.forEach(function (title) {
+                        maxHeight = Math.max(maxHeight, title.getBoundingClientRect().height);
+                    });
+
+                    row.items.forEach(function (title) {
+                        title.style.minHeight = maxHeight + 'px';
+                    });
+                });
+            }
+
+            function syncCardTitleAlignment() {
+                syncRowTitleHeights(servicesPageCardTitles, function () {
+                    return window.innerWidth > 900;
+                });
             }
 
             function showContactCtaCopiedFromNav() {
@@ -428,6 +484,8 @@
                 if (window.innerWidth > 720) {
                     closeMenu();
                 }
+
+                syncCardTitleAlignment();
             });
 
             window.addEventListener('scroll', function () {
@@ -444,5 +502,12 @@
                 window.requestAnimationFrame(function () {
                     scrollToTarget(window.location.hash);
                 });
+            }
+
+            window.requestAnimationFrame(syncCardTitleAlignment);
+            window.addEventListener('load', syncCardTitleAlignment);
+
+            if (document.fonts && document.fonts.ready) {
+                document.fonts.ready.then(syncCardTitleAlignment);
             }
         });
